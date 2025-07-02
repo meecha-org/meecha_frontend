@@ -9,9 +9,9 @@ struct LoginView: View {
     @State var inputMail: String = ""
     @State var inputPass: String = ""
     @State var inputPassConf: String = ""
-//        forms(title: "メールアドレス"),
-//        forms(title: "パスワード"),
-//        forms(title: "パスワード確認")
+    //ボタン
+    @State var loginButton: Bool = false
+    @State var googleButton: Bool = false
     
     var body: some View {
         ZStack{
@@ -20,50 +20,84 @@ struct LoginView: View {
             
             VStack(alignment: .center){
                 Image(.meechaLogo)  //ロゴ
-                    .padding(.top, 100)
-    
+                    .padding(.top, 96)
+                
                 Spacer()
-                //ログインフォーム
-                VStack(alignment: .center, spacing: 40){
-                    //メールアドレス
-                    VStack(alignment: .leading, spacing: 0){
-                        Text("メールアドレス")
-                            .zenFont(.medium, size: 12)
-                        TextField("", text: $inputMail)
-                            .zenFont(.regular, size: 12, color: .font)
-                            .frame(width: 300, height: 45)
-                            .textFieldStyle(.roundedBorder)
-                            .keyboardType(.emailAddress)
-                            .onSubmit{
-                                print("\(inputMail)")
-                            }
+                
+                VStack(spacing: 40) {
+                        //ログインフォーム
+                        VStack(alignment: .center, spacing: 32){
+                            //メールアドレス
+                            VStack(alignment: .leading, spacing: 0){
+                                Text("メールアドレス")
+                                    .zenFont(.medium, size: 12)
+                                TextField("", text: $inputMail)
+                                    .zenFont(.regular, size: 12, color: .font)
+                                    .frame(width: 300, height: 45)
+                                    .textFieldStyle(.roundedBorder)
+                                    .keyboardType(.emailAddress)
+                                    .onSubmit{
+                                        print("\(inputMail)")
+                                    }
+                            }   // VStack メールアドレス
                             
-                    }
-                    //パスワード
-                    VStack(alignment: .leading, spacing: 0){
-                        Text("パスワード")
-                            .zenFont(.medium, size: 12)
-                        TextField("", text: $inputPass)
-                            .zenFont(.regular, size: 12, color: .font)
-                            .background(Color.clear)
-                            .frame(width: 300, height: 45)
-                            .textFieldStyle(.roundedBorder)
-                            .keyboardType(.numbersAndPunctuation)
-                            .onSubmit{
-                                print("\(inputPass)")
-                            }
-                        HStack {
-                            Spacer()
-                            Text("パスワードを忘れた方はこちら")
-                                .zenFont(.medium, size: 10, color: .formFont)
+                            //パスワード
+                            VStack(alignment: .leading, spacing: 0){
+                                Text("パスワード")
+                                    .zenFont(.medium, size: 12)
+                                TextField("", text: $inputPass)
+                                    .zenFont(.regular, size: 12, color: .font)
+                                    .background(Color.clear)
+                                    .frame(width: 300, height: 45)
+                                    .textFieldStyle(.roundedBorder)
+                                    .keyboardType(.asciiCapable)
+                                    .onSubmit{
+                                        print("\(inputPass)")
+                                    }
+                                HStack {
+                                    Spacer()
+                                    Text("パスワードを忘れた方はこちら")
+                                        .zenFont(.medium, size: 10, color: .formFont)
+                                }   // HStack
+                            }   // VStack パスワード
+                        }   // VStack ログインフォーム
+                        
+                        //Googleログイン
+                        Button(action:{
+                            googleButton = true
+                            print("Googleログイン")
+                        }){
+                            Image(.iosNeutralSqSI)
                         }
-                    }
+                        .buttonStyle(.plain)
+
                 }   //VStack
                 .frame(width: 300)
+                
+                //ログインボタン
+                Button(action: {
+                    loginButton = true
+                    print("ログイン")
+                }){
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.main)
+                            .frame(width: 95, height: 45)
+                            .shadow(radius: 2, x: 0, y: 4)
+                        Text("ログイン")
+                            .zenFont(.bold, size: 16, color: .white)
+                    }   //ZStack
+                }   //Button
+                .buttonStyle(.plain)
+                .padding(.top, 64)
+                
                 Spacer()
             }   //VStack
+            .ignoresSafeArea(.keyboard)
+            
         }   //ZStack
     }   //body
+    
 }   //View
 
 #Preview {
