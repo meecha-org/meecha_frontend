@@ -77,7 +77,7 @@ struct LoginView: View {
                 //ログインボタン
                 Button(action: {
                     loginButton = true
-                    print("ログイン")
+                    print("ログイン: mail: \(inputMail), pass: \(inputPass)")
                 }){
                     ZStack{
                         RoundedRectangle(cornerRadius: 10)
@@ -93,7 +93,7 @@ struct LoginView: View {
                 
                 Spacer()
             }   //VStack
-            .ignoresSafeArea(.keyboard)
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             
         }   //ZStack
     }   //body
