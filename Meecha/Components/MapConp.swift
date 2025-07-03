@@ -13,21 +13,34 @@ extension CLLocationCoordinate2D {
 }
 
 struct MapConp: View {
-    @State var position: MapCameraPosition = .automatic //
-    
-    @ObservedObject var manager = LocationManager()
-      
-    @State var trackingMode = MapUserTrackingMode.follow
+    @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
     
     var body: some View {
-        Map(// 場所の範囲を決める
-            coordinateRegion: $manager.region,
-            // 自分のいる場所を地図に表示するか
-            showsUserLocation: true,
-            // 歩いてる時地図の中心を変えるか
-            userTrackingMode: $trackingMode)
-//            Marker("ECC", systemImage: "train.side.front.car", coordinate: .ECC)
-//                .tint(.blue)
+        ZStack{
+            Map(position: $position){
+                UserAnnotation(anchor: .bottom) // ユーザーの位置常に表示
+                {
+                    Image(.userMapPin)
+                }
+                
+                Annotation("フレンドネーム",coordinate: .ECC,anchor: .bottom){
+                    FriendMapPin()
+                }
+                     
+                
+                    
+            }
+        }
+        
+        VStack( alignment: .trailing) {
+            Spacer()
+            HStack {
+                Spacer()
+                LocationButton(position: $position)
+            }
+            .padding(.trailing, 30)
+        }
+        .padding(.bottom, 120)
     }
 }
 
