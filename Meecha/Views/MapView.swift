@@ -17,10 +17,9 @@ struct MapView: View {
                
 
             }
-        }
-        
-    }
-}
+        }   //ZStack
+    }   //body
+}   // View
 
 #Preview {
     MapView()

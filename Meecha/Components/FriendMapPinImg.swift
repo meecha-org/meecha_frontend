@@ -1,18 +1,20 @@
 //
-//  FriendMapPin.swift
+//  FriendMapPinImg.swift
 //  Meecha
 //
 //  Created by 2230220 on 2025/07/03.
 //
+//　フレンドのアイコンピン
 import SwiftUI
 
-struct FriendMapPin: View{
+struct FriendMapPinImg: View{
+    @State var FriendImg : ImageResource    //フレンドのアイコン
     var body: some View{
         
         ZStack(alignment: .center) {
             Image(.friendPin)
             VStack(alignment: .center) {
-                Image(.iconSample)
+                Image(FriendImg)
                     .resizable()
                     .frame(width: 37, height: 37)
                     .cornerRadius(100)
@@ -22,10 +24,5 @@ struct FriendMapPin: View{
             }
         }
         .frame(width: 50, height: 50)
-            
-    }
-}
-
-#Preview {
-    FriendMapPin()
-}
+    }   //body
+}   // View
