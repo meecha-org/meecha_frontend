@@ -1,16 +1,33 @@
+//
+//  LocationButton.swift
+//  Meecha
+//
+//  Created by 2230220 on 2025/07/03.
+//
+//現在地に戻るボタン
+
 import SwiftUI
 import MapKit
 
 struct LocationButton: View {
-    
-    @Binding var position: MapCameraPosition
+
+    @Binding var position: MapCameraPosition    //
 
     var body: some View {
         
-        Button {
+        
+        Button(action:{
             position = .userLocation(fallback: .automatic)
-        } label: {
-            Label("ふるさと",systemImage: "location.circle")
+        }){
+            //現在地表示なら塗りつぶしアイコン
+            ZStack(alignment: .center){
+                if(position == .userLocation(fallback: .automatic)){
+                    Image(.locationFill)
+                }else{
+                    Image(.location)
+                }
+                
+            }
         }
     }
 }

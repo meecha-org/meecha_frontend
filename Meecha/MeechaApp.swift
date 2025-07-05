@@ -11,7 +11,7 @@ import SwiftUI
 struct MeechaApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            CustomTabView()
         }
     }
 }
