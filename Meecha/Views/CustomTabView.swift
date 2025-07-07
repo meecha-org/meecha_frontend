@@ -12,10 +12,12 @@ struct CustomTabView: View {
     
     let gradient = LinearGradient(gradient: Gradient(colors: [.clear, .bg]), startPoint: .top, endPoint: .center)
     let tabIcons = ["Users","MapPin", "UserCircle"] //アイコン
+    let tabIconFill = ["UsersFill","MapPinFill","UserCircleFill"]
 
     var body: some View {
         ZStack {
-            // メイン表示
+            Color.bg.ignoresSafeArea()
+            // 表示する画面
             ZStack {
                 switch selectedIndex {
                 case 0:
@@ -28,33 +30,45 @@ struct CustomTabView: View {
             
             // カスタムタブバー
             VStack {
+                Header()
                 Spacer()
-                HStack(){
-                    HStack(alignment: .bottom) {
-                        ForEach(0..<tabIcons.count, id: \.self) { i in
-                            Spacer()
-                            Button(action: {
-                                selectedIndex = i
-                            }) {
-                                VStack() {
-                                    Image(tabIcons[i])
-                                        .font(.system(size: 23))
-                                        .foregroundColor(selectedIndex == i ? .main : .main) // 色切り替え
+                ZStack {
+                    
+                    Rectangle()
+                        .fill(gradient)
+                        .frame(maxWidth: .infinity, maxHeight: 120)
+                    HStack(){
+                        HStack(alignment: .bottom) {
+                            ForEach(0..<tabIcons.count, id: \.self) { i in
+                                Spacer()
+                                Button(action: {
+                                    selectedIndex = i
+                                }) {
+                                    VStack() {
+                                        //選択されている画面のアイコンを変える
+                                        if(selectedIndex == i){
+                                            Image(tabIconFill[i])
+                                                .font(.system(size: 23))
+                                                .foregroundColor(selectedIndex == i ? .main : .main) // 色切り替え
+                                        }else{
+                                            Image(tabIcons[i])
+                                                .font(.system(size: 23))
+                                                .foregroundColor(selectedIndex == i ? .main : .main) // 色切り替え
+                                        }
+                                    }
                                 }
+                                Spacer()
                             }
-                            Spacer()
                         }
-                    }
-                    .frame(width: 360)
-                    .padding(.top, 20)
-                }   //HStack
-                .frame(maxWidth: .infinity, maxHeight: 120)
-                .padding(.top, 10)
-                .padding(.bottom, 20)
-                .background(gradient)
+                        .frame(width: 360)
+                        .padding(.top, 20)
+                    }   //HStack
+                    .padding(.top, 10)
+                    .padding(.bottom, 20)
+                }
             }
         }   // VStack
-        .edgesIgnoringSafeArea(.bottom)
+        .edgesIgnoringSafeArea(.all)
     }   //body
 }   // View
 

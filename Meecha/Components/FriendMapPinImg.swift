@@ -5,6 +5,7 @@
 //  Created by 2230220 on 2025/07/03.
 //
 //　フレンドのアイコンピン
+
 import SwiftUI
 
 struct FriendMapPinImg: View{

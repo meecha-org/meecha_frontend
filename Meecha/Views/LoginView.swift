@@ -15,8 +15,7 @@ struct LoginView: View {
     
     var body: some View {
         ZStack{
-            Color.bg
-                .ignoresSafeArea()
+            Color.bg.ignoresSafeArea()
             
             VStack(alignment: .center){
                 Image(.meechaLogo)  //ロゴ
@@ -35,7 +34,7 @@ struct LoginView: View {
                                     .zenFont(.regular, size: 12, color: .font)
                                     .frame(width: 300, height: 45)
                                     .textFieldStyle(.roundedBorder)
-                                    .keyboardType(.emailAddress)
+                                    .keyboardType(.emailAddress)    //キーボードの種類指定
                                     .onSubmit{
                                         print("\(inputMail)")
                                     }
