@@ -21,7 +21,11 @@ struct CustomTabView: View {
             ZStack {
                 switch selectedIndex {
                 case 0:
+                    FriendView()
+                case 1:
                     MapView()
+                case 2:
+                    SettingView()
                 default:
                     MapView()
                 }
