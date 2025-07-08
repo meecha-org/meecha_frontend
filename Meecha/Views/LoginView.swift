@@ -4,6 +4,7 @@
 //
 //  Created by 2230220 on 2025/06/29.
 //
+//  ログイン画面
 import SwiftUI
 struct LoginView: View {
     @State var inputMail: String = ""

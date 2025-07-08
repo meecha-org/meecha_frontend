@@ -13,7 +13,7 @@ struct CustomTabView: View {
     let gradient = LinearGradient(gradient: Gradient(colors: [.clear, .bg]), startPoint: .top, endPoint: .center)
     let tabIcons = ["Users","MapPin", "UserCircle"] //アイコン
     let tabIconFill = ["UsersFill","MapPinFill","UserCircleFill"]
-
+    
     var body: some View {
         ZStack {
             Color.bg.ignoresSafeArea()
@@ -34,10 +34,11 @@ struct CustomTabView: View {
             
             // カスタムタブバー
             VStack {
+                
                 Header()
                 Spacer()
+                
                 ZStack {
-                    
                     Rectangle()
                         .fill(gradient)
                         .frame(maxWidth: .infinity, maxHeight: 120)

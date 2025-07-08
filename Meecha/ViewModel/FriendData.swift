@@ -4,6 +4,7 @@
 //
 //  Created by 2230220 on 2025/07/08.
 //
+//  フレンド情報_サンプル
 import SwiftUI
 import Foundation
 import MapKit
