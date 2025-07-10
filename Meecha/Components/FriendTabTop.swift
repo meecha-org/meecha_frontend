@@ -15,6 +15,11 @@ struct FriendTabTop: View {
 //            Color.bg.ignoresSafeArea()
             VStack {
                 ZStack(){
+                    //緑のボーダー
+                    Rectangle()
+                        .fill(Color.main)
+                        .frame(width: 322, height: 60)
+                        .padding(.top, 34)
                     // ページ選択タブ上部
                     HStack() {
                         ForEach(0..<tabText.count, id: \.self) { i in
@@ -24,7 +29,7 @@ struct FriendTabTop: View {
                                 Rectangle()
                                     .fill(Color.main)
                                     .frame(width: 102, height: 60)
-                                //一部ボーダー
+                                    //一部角丸
                                     .clipShape(.rect(
                                         topLeadingRadius: 11,
                                         bottomLeadingRadius: 0,
@@ -44,7 +49,7 @@ struct FriendTabTop: View {
                                                 .fill(Color.white)
                                                 .frame(width: 100, height: 50)
                                                 .padding(.bottom, 8)
-                                            //一部ボーダー
+                                                //一部角丸
                                                 .clipShape(.rect(
                                                     topLeadingRadius: 10,
                                                     bottomLeadingRadius: 0,
@@ -63,11 +68,13 @@ struct FriendTabTop: View {
                                         }
                                     }   //ZStack
                                 }   // Button
+                                .buttonStyle(.plain)
                             }   // ZStack
                         }   // ForEach
                         Spacer()
                     }   // HStack
-                }   // HStack
+                    .padding(.bottom, 32)
+                }   // ZStack
             }   // VStack
         }   // VStack
         .frame(width: 330)

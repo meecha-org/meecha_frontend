@@ -17,7 +17,7 @@ struct FriendTabFrame: View {
             ZStack {
                 Rectangle()
                     .fill(Color.main)
-                    .frame(width: 323, height: 551)
+                    .frame(width: 322, height: 551)
                     .padding(.top, 1)
                 //一部角丸
                     .clipShape(.rect(
@@ -28,7 +28,7 @@ struct FriendTabFrame: View {
                     ))
                 Rectangle()
                     .fill(Color.white)
-                    .frame(width: 321, height: 550)
+                    .frame(width: 320, height: 550)
                 //一部角丸
                     .clipShape(.rect(
                         topLeadingRadius: 0,
