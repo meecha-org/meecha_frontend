@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomTabView: View {
-    @State private var selectedIndex = 1
+    @State private var selectedIndex = 0
     
     let gradient = LinearGradient(gradient: Gradient(colors: [.clear, .bg]), startPoint: .top, endPoint: .center)
     let tabIcons = ["Users","MapPin", "UserCircle"] //アイコン

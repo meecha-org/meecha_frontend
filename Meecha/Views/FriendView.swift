@@ -8,9 +8,27 @@
 import SwiftUI
 
 struct FriendView: View {
+    @State var selectedIndex = 0
     var body: some View {
         ZStack(){
-            FriendTabFrame()
+            FriendTabTop(selectedIndex: $selectedIndex)
+            
+            VStack{
+                ScrollView{
+                    switch selectedIndex {
+                    case 0:
+                        FriendConp()
+                    case 1:
+                        ApprovalComp()
+                    case 2:
+                        SettingView()
+                    default:
+                        MapView()
+                    }
+                }
+            }
+            .frame(height: 500)
+            .padding(.top)
         }   // ZStack
     }   // body
 }   // View

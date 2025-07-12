@@ -7,11 +7,11 @@
 import SwiftUI
 
 struct FriendTabTop: View {
-    @State private var selectedIndex = 0
+    @Binding var selectedIndex: Int
     let tabText = ["フレンド","承認前", "申請中"]//アイコン
     
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack() {
 //            Color.bg.ignoresSafeArea()
             VStack {
                 ZStack(){
@@ -39,8 +39,7 @@ struct FriendTabTop: View {
                                 // ページ選択ボタン
                                 Button(action: {
                                     selectedIndex = i
-                                    print(selectedIndex)
-                                }) {
+                                }){
                                     ZStack() {
                                         //選択されている画面のアイコンを変える
                                         if(selectedIndex == i){
@@ -75,8 +74,33 @@ struct FriendTabTop: View {
                     }   // HStack
                     .padding(.bottom, 32)
                 }   // ZStack
+                Spacer()
             }   // VStack
-        }   // VStack
-        .frame(width: 330)
+            ZStack {
+                Rectangle()
+                    .fill(Color.main)
+                    .frame(width: 322, height: 551)
+                    .padding(.top, 1)
+                //一部角丸
+                    .clipShape(.rect(
+                        topLeadingRadius: 0,
+                        bottomLeadingRadius: 16,
+                        bottomTrailingRadius: 16,
+                        topTrailingRadius: 0
+                    ))
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 320, height: 550)
+                //一部角丸
+                    .clipShape(.rect(
+                        topLeadingRadius: 0,
+                        bottomLeadingRadius: 15,
+                        bottomTrailingRadius: 15,
+                        topTrailingRadius: 0
+                    ))
+            }   // ZStack
+        }   // ZStack
+        .frame(width: 330, height: 620)
     }   // body
-}
+}   // View
+

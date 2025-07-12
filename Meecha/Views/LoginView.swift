@@ -10,8 +10,9 @@ struct LoginView: View {
     @State var inputMail: String = ""
     @State var inputPass: String = ""
     @State var inputPassConf: String = ""
+
     //ボタン
-    @State var loginButton: Bool = false
+    @Binding var loginButton: Bool
     @State var googleButton: Bool = false
     
     var body: some View {
@@ -47,7 +48,7 @@ struct LoginView: View {
                                     .zenFont(.medium, size: 12)
                                 TextField("", text: $inputPass)
                                     .zenFont(.regular, size: 12, color: .font)
-                                    .background(Color.clear)
+                                    .background(Color.white)
                                     .frame(width: 300, height: 45)
                                     .textFieldStyle(.roundedBorder)
                                     .keyboardType(.asciiCapable)
@@ -99,7 +100,3 @@ struct LoginView: View {
     }   //body
     
 }   //View
-
-#Preview {
-    LoginView()
-}
