@@ -4,7 +4,7 @@
 //
 //  Created by 2230220 on 2025/07/12.
 //
-//  承認前ユーザー　サンプル
+//  承認前ユーザー_サンプル
 import SwiftUI
 import Foundation
 

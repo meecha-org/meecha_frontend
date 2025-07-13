@@ -4,7 +4,7 @@
 //
 //  Created by 2230220 on 2025/07/08.
 //
-//
+//　フレンド画面
 import SwiftUI
 
 struct FriendView: View {
@@ -21,7 +21,7 @@ struct FriendView: View {
                     case 1:
                         ApprovalComp()
                     case 2:
-                        SettingView()
+                        RequestComp()
                     default:
                         MapView()
                     }
