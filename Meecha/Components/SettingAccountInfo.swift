@@ -66,8 +66,8 @@ struct SettingAccountInfo: View {
                         }
                         .buttonStyle(.plain)
                         .alert(isPresented: $alertOn) {
-                                        Alert(title: Text("コピー"), message: Text("IDをクリップボードにコピーしました"), dismissButton: .default(Text("OK")))
-                                    }
+                            Alert(title: Text("コピー"), message: Text("IDをクリップボードにコピーしました"), dismissButton: .default(Text("OK")))
+                        }
                     }
                     .frame(width: 150)
                 }

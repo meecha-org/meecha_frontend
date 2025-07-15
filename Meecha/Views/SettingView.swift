@@ -27,12 +27,14 @@ struct SettingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.main, lineWidth: 1)
                     )
+                
+                SettingListsGroup()
             }
             
             Spacer()
-        }
-    }
-}
+        }   // VStack
+    }   // body
+}   // View
 
 #Preview {
     SettingView()
