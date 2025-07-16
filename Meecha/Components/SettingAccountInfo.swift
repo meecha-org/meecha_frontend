@@ -42,36 +42,6 @@ struct SettingAccountInfo: View {
                     Text(MyName)
                         .zenFont(.medium, size: 16, color: .font)
                 }
-                ZStack {
-                    RoundedRectangle(cornerRadius: 5)
-                        .fill(Color.formBg)
-                        .frame(width: 150, height: 25)
-                    
-                    HStack() {
-                        Text("ID：\(MyID)")
-                            .zenFont(.medium, size: 16, color: .font)
-                            .padding(.leading, 8)
-                        
-                        Spacer()
-                        Button(action: {
-                            copyText = MyID
-                            UIPasteboard.general.string = copyText
-                            alertOn = true
-                        }){
-                            Image(systemName: "document.on.document.fill")
-                                .resizable()
-                                .foregroundStyle(Color.formIcon)
-                                .frame(width: 15, height: 18)
-                                .padding(.trailing, 8)
-                        }
-                        .buttonStyle(.plain)
-                        .alert(isPresented: $alertOn) {
-                            Alert(title: Text("コピー"), message: Text("IDをクリップボードにコピーしました"), dismissButton: .default(Text("OK")))
-                        }
-                    }
-                    .frame(width: 150)
-                }
-                
             }
         }
     }
