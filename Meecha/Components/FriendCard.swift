@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FriendCard: View {
-    @State var iconImage: ImageResource
+    @State var iconImage: String
     @State var name: String
     var body: some View {
         ZStack{
@@ -24,15 +24,17 @@ struct FriendCard: View {
             
             HStack{
                 //アイコン
-                Image(iconImage)
-                    .resizable()
-                    .frame(width: 55, height: 55)
-                    .cornerRadius(50)
+                AsyncImage(url: URL(string: iconImage)) { image in
+                    Image(iconImage)
+                        .resizable()
+                        .frame(width: 55, height: 55)
+                        .cornerRadius(50)
                     // 角丸ボーダー
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50)
-                            .stroke(Color.formBorder, lineWidth: 1.5)
-                    )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 50)
+                                .stroke(Color.formBorder, lineWidth: 1.5)
+                        )
+                }
                 
                 Spacer()
                 VStack{
@@ -62,7 +64,7 @@ struct FriendCard: View {
 }
 
 #Preview {
-    FriendCard(iconImage: .iconSample, name: "かれんこん")
+    FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/USERID.png", name: "かれんこん")
 }
 
 

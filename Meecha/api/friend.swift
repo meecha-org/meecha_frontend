@@ -1,7 +1,7 @@
 import Foundation
 
 // フレンドのデータ構造
-struct Friend {
+struct Friend: Identifiable {
     let name: String
     let id: String
 }
@@ -106,3 +106,18 @@ func example() {
         }
     }
 }
+
+//class FriendsData: ObservableObject{
+//    // Viewに通知するため @Published をつける
+//    @Published var frienddata: [Friend] = []
+//    var (friends, error) = getFriendList()
+//    
+//    init(){
+//        for i in friends {
+//            //仮データ
+//            frienddata = [
+//                Friend(name: friend.name),
+//            ]
+//        }
+//    }
+//}

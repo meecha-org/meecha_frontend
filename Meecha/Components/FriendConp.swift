@@ -9,26 +9,28 @@ import SwiftUI
 
 struct FriendConp: View {
     @StateObject private var friendsModel = FriendModel()
+    @State private var users: [Friend] = []
+    var (friends, error) = getFriendList()
     var body: some View {
         VStack{
-            ForEach(friendsModel.friends){ i in
-                FriendCard(iconImage: i.iconImage, name: i.name)
+//            ForEach(friendsModel.friends){ i in
+//                FriendCard(iconImage: i.iconImage, name: i.name)
+//            }
+            ForEach(users){ i in
+                FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/\(i.id).png", name: i.name)
             }
         }
         .frame(width: 300)
         .padding(.top, 10)
-        .task {
+        .onAppear {
             do {
                 // フレンド一覧取得
-                let (friends, error) = getFriendList()
-                
                 if let error = error {
                     print("エラーが発生しました: \(error.localizedDescription)")
                 } else if let friends = friends {
                     print("フレンドリスト:")
-                    
-                    for friend in friends {
-                        print("- 名前: \(friend.name), ID: \(friend.id)")
+                    DispatchQueue.main.async {
+                        self.users = friends
                     }
                 }
             } catch {
