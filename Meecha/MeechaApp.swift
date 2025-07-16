@@ -15,17 +15,18 @@ struct MeechaApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack{
-                if isLoading {
-                    LoadingView() // ローディング画面
-                } else if hasError {
-                    ErrorView() // エラー画面
-                } else {
-                    if loginState {
-                        CustomTabView()
-                    } else {
-                        LoginView(loginButton: $loginState)
-                    }
-                }
+//                if isLoading {
+//                    LoadingView() // ローディング画面
+//                } else if hasError {
+//                    ErrorView() // エラー画面
+//                } else {
+//                    if loginState {
+//                        CustomTabView()
+//                    } else {
+//                        LoginView(loginButton: $loginState)
+//                    }
+//                }
+                ContentView()
             }
             .task {
                 await performInitialLoad()

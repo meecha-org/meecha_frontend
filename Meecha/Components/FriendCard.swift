@@ -24,8 +24,8 @@ struct FriendCard: View {
             
             HStack{
                 //アイコン
-                AsyncImage(url: URL(string: iconImage)) { image in
-                    Image(iconImage)
+                AsyncImage(url: URL(string: iconImage)) { resimage in
+                    resimage.image?
                         .resizable()
                         .frame(width: 55, height: 55)
                         .cornerRadius(50)
@@ -64,7 +64,7 @@ struct FriendCard: View {
 }
 
 #Preview {
-    FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/USERID.png", name: "かれんこん")
+    FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
 }
 
 

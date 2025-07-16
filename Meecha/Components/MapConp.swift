@@ -21,7 +21,7 @@ struct MapConp: View {
                 ForEach(friendsModel.friends){ i in
                     //フレンドの位置
                     Annotation(i.name ,coordinate: i.coordinate ,anchor: .bottom){
-                        FriendMapPinImg(FriendImg: i.iconImage)
+                        FriendMapPinImg(FriendImg: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png")
                     }
                 }
             }
