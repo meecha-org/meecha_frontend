@@ -17,6 +17,24 @@ struct FriendConp: View {
         }
         .frame(width: 300)
         .padding(.top, 10)
+        .task {
+            do {
+                // フレンド一覧取得
+                let (friends, error) = getFriendList()
+                
+                if let error = error {
+                    print("エラーが発生しました: \(error.localizedDescription)")
+                } else if let friends = friends {
+                    print("フレンドリスト:")
+                    
+                    for friend in friends {
+                        print("- 名前: \(friend.name), ID: \(friend.id)")
+                    }
+                }
+            } catch {
+                debugPrint(error)
+            }
+        }
     }
 }
 

@@ -36,6 +36,7 @@ struct MapConp: View {
                 .padding(.trailing, 30)
             }
             .padding(.bottom, 120)
+        }.task {
             
         }   // ZStack
     }   //body

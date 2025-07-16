@@ -90,8 +90,12 @@ struct LoginView: View {
                                         let userInfo = try await FetchInfo()
                                         
                                         if userInfo.userId != "" {
+                                            // トークンを設定する
+                                            AuthTokenManager.shared.refreshToken = getKeyChain(key: Config.rfTokenKey)
+                                            
                                             // ログインに成功した時
                                             IsLogin = true
+                                            
                                         }
                                     }
                                 } else {
@@ -128,20 +132,4 @@ struct LoginView: View {
             }   //ZStack
         }
     }   //body
-    
-    func getCode(callbackURL: URL) -> String? {
-        print(callbackURL);
-        guard let components = URLComponents(url: callbackURL, resolvingAgainstBaseURL: false),
-              let queryItems = components.queryItems
-        else {
-            return nil
-        }
-        if let codeValue = queryItems.first(where: { $0.name == "token" })?.value {
-            print("Code value: \(codeValue)")
-            saveKeyChain(tag: "authToken", value: codeValue);
-            return codeValue
-        } else {
-            return nil
-        }
-    }
 }   //View
