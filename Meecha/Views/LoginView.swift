@@ -10,22 +10,28 @@ struct LoginView: View {
     @State var inputMail: String = ""
     @State var inputPass: String = ""
     @State var inputPassConf: String = ""
-
+    
     //ボタン
     @Binding var loginButton: Bool
     @State var googleButton: Bool = false
+    @State var IsLogin: Bool = false
+    
+    @State private var code: String?
     
     var body: some View {
-        ZStack{
-            Color.bg.ignoresSafeArea()
-            
-            VStack(alignment: .center){
-                Image(.meechaLogo)  //ロゴ
-                    .padding(.top, 96)
+        if IsLogin {
+            CustomTabView()
+        } else {
+            ZStack{
+                Color.bg.ignoresSafeArea()
                 
-                Spacer()
-                
-                VStack(spacing: 40) {
+                VStack(alignment: .center){
+                    Image(.meechaLogo)  //ロゴ
+                        .padding(.top, 96)
+                    
+                    Spacer()
+                    
+                    VStack(spacing: 40) {
                         //ログインフォーム
                         VStack(alignment: .center, spacing: 32){
                             //メールアドレス
@@ -66,37 +72,76 @@ struct LoginView: View {
                         //Googleログイン
                         Button(action:{
                             googleButton = true
+                            // 画面を遷移する
                             print("Googleログイン")
+                            
                         }){
                             Image(.iosNeutralSqSI)
-                        }
+                        }   // Googleログインボタン
                         .buttonStyle(.plain)
-
+                        .fullScreenCover(isPresented: $googleButton) {
+                            AuthSessionView { callbackURL,isSuccess in
+                                self.code = getCode(callbackURL: callbackURL)
+                                
+                                if isSuccess {
+                                    print("Login success")
+                                    
+                                    Task {
+                                        let userInfo = try await FetchInfo()
+                                        
+                                        if userInfo.userId != "" {
+                                            // ログインに成功した時
+                                            IsLogin = true
+                                        }
+                                    }
+                                } else {
+                                    print("Login failed")
+                                }
+                                
+                                googleButton = false;
+                            }
+                        }   // else
+                    }   //VStack
+                    .frame(width: 300)
+                    
+                    //ログインボタン
+                    Button(action: {
+                        loginButton = true
+                        print("ログイン: mail: \(inputMail), pass: \(inputPass)")
+                    }){
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.main)
+                                .frame(width: 95, height: 45)
+                                .shadow(radius: 2, x: 0, y: 4)
+                            Text("ログイン")
+                                .zenFont(.bold, size: 16, color: .white)
+                        }   //ZStack
+                    }   //Button
+                    .buttonStyle(.plain)
+                    .padding(.top, 64)
+                    
+                    Spacer()
                 }   //VStack
-                .frame(width: 300)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
                 
-                //ログインボタン
-                Button(action: {
-                    loginButton = true
-                    print("ログイン: mail: \(inputMail), pass: \(inputPass)")
-                }){
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.main)
-                            .frame(width: 95, height: 45)
-                            .shadow(radius: 2, x: 0, y: 4)
-                        Text("ログイン")
-                            .zenFont(.bold, size: 16, color: .white)
-                    }   //ZStack
-                }   //Button
-                .buttonStyle(.plain)
-                .padding(.top, 64)
-                
-                Spacer()
-            }   //VStack
-            .ignoresSafeArea(.keyboard, edges: .bottom)
-            
-        }   //ZStack
+            }   //ZStack
+        }
     }   //body
     
+    func getCode(callbackURL: URL) -> String? {
+        print(callbackURL);
+        guard let components = URLComponents(url: callbackURL, resolvingAgainstBaseURL: false),
+              let queryItems = components.queryItems
+        else {
+            return nil
+        }
+        if let codeValue = queryItems.first(where: { $0.name == "token" })?.value {
+            print("Code value: \(codeValue)")
+            saveKeyChain(tag: "authToken", value: codeValue);
+            return codeValue
+        } else {
+            return nil
+        }
+    }
 }   //View
