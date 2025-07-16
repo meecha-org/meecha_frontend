@@ -21,7 +21,7 @@ struct SettingView: View {
                 // 設定背景
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.white)
-                    .frame(width: 300, height: 280)
+                    .frame(width: 300, height: 320)
                     // 角丸ボーダー
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)

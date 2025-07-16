@@ -12,7 +12,7 @@ struct SettingList: View {
     var body: some View {
             HStack{
                 Text("\(ListText)")
-                    .zenFont(.medium, size: 12, color: .font)
+                    .zenFont(.medium, size: 14, color: .font)
                 Spacer()
                 Image(systemName: "chevron.right")
                     .resizable()
