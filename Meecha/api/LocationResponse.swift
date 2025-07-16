@@ -10,6 +10,7 @@ struct NearUser: Codable {
     let userid: String
     let latitude: Double
     let longitude: Double
+    let name : String
     let Dist: Double
 }
 
