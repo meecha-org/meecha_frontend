@@ -16,7 +16,6 @@ struct MapView: View {
             
             VStack{
                
-
             }
         }   //ZStack
     }   //body

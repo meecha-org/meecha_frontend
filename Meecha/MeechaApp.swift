@@ -29,6 +29,9 @@ struct MeechaApp: App {
             }
             .task {
                 await performInitialLoad()
+                
+                // 位置情報の監視を追加
+                GlobalLocationMonitor.shared.startMonitoring()
             }
         }
     }
@@ -40,9 +43,13 @@ struct MeechaApp: App {
             isLoading = false
             
             if userInfo.userId == "" {
+                // ログイン失敗にする
                 loginState = false
                 return
             }
+            
+            // トークンを設定
+            AuthTokenManager.shared.refreshToken = getKeyChain(key: Config.rfTokenKey)
             loginState = true
         } catch {
             hasError = true
