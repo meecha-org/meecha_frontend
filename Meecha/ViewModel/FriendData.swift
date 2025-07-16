@@ -14,22 +14,22 @@ struct FriendData: Identifiable {
     let name: String    // 名前
     let coordinate: CLLocationCoordinate2D      // 座標
     let iconImage: ImageResource
-    let id = UUID()     // 識別するためのIDを生成
+    let id: String; //UUID()     // 識別するためのIDを生成
 }
 
 class FriendModel: ObservableObject {
     // Viewに通知するため @Published をつける
-        @Published var friends: [FriendData] = []
+    @Published var friends: [FriendData] = []
 
     init(){
         //仮データ
         friends = [
-            FriendData(name: "matumoto", coordinate: .ECC, iconImage: .iconSample),
-            FriendData(name: "karen", coordinate: .Osaka, iconImage: .iconSample1),
-            FriendData(name: "ryo", coordinate: .Nakazaki, iconImage: .iconSample2),
-            FriendData(name: "yuki", coordinate: .Yumesima, iconImage: .iconSample3),
-            FriendData(name: "goroka", coordinate: .Kanku,iconImage: .iconSample4),
-            FriendData(name: "かれんこん", coordinate: .Kuresaki, iconImage: .iconSample5)
+            FriendData(name: "matumoto", coordinate: .ECC, iconImage: .iconSample,id:"7c438485-14ca-4d42-8b5d-9f33978f5577"),
+            FriendData(name: "karen", coordinate: .Osaka, iconImage: .iconSample1,id:"8ece8e1d-a21f-443a-94f4-2b090b05cd88"),
+            FriendData(name: "ryo", coordinate: .Nakazaki, iconImage: .iconSample2,id:"561c292d-9c69-4bf4-b4e4-2ef7948aec69"),
+            FriendData(name: "yuki", coordinate: .Yumesima, iconImage: .iconSample3,id:"1b3ad9a3-4c0a-4d00-b21e-47889c377080"),
+            FriendData(name: "goroka", coordinate: .Kanku,iconImage: .iconSample4,id:"fc1b5330-dcff-461f-81c1-78c9985e3aeb"),
+            FriendData(name: "かれんこん", coordinate: .Kuresaki, iconImage: .iconSample5,id:"0f2613d1-1461-4f83-b85a-7d8c53649ab5")
         ]
     }
 }
