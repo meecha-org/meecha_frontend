@@ -15,17 +15,16 @@ struct FriendSettingFrame: View {
             // 白背景
             VStack{
                 // ボタンリスト
-                VStack{
+                VStack(spacing: 4){
                     Button("ブロック", action:{
                         isBlockd = true
                         print("ブロックボタン")
                     })
                     .zenFont(.medium, size: 9, color: .meechaRed)
                 }
-                .padding(.top, 10)
-                .padding(.bottom, 10)
+                .padding(.all, 10)
             }
-            .frame(width: 63)
+
             .background(Color.white)
             //一部角丸
             .clipShape(.rect(
@@ -34,11 +33,8 @@ struct FriendSettingFrame: View {
                 bottomTrailingRadius: 5,
                 topTrailingRadius: 5
             ))
-            .padding(.top, 1)
-            .padding(.bottom, 1)
-
+            .padding(.all, 1)
         }
-        .frame(width: 65)
         .background(Color.formBorder)
         //一部角丸
         .clipShape(.rect(

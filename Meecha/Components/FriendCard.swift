@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct FriendCard: View {
-    @State var iconImage: String
-    @State var name: String
+    @State var iconImage: String    // アイコン
+    @State var name: String         // 名前
+    
+    @State var isSetting: Bool = false
     var body: some View {
         ZStack{
+            // 背景タップ領域
+               Color.clear
+                   .contentShape(Rectangle())
+                   .onTapGesture {
+                       isSetting = false
+                   }
             // カード背景
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
@@ -61,7 +69,7 @@ struct FriendCard: View {
             
             //設定ボタン
             Button(action:{
-                
+                isSetting = true
             }){
                 HStack {
                     Spacer()
@@ -70,6 +78,16 @@ struct FriendCard: View {
             }
             .padding(.bottom, 35)
             .frame(width: 260)
+            .buttonStyle(.plain)
+            
+            if isSetting {
+                HStack {
+                    Spacer()
+                    FriendSettingFrame()
+                }
+                .padding(.bottom, 50)
+                .frame(width: 330)
+            }
         }   // ZStack
     }   // body
 }   // View
