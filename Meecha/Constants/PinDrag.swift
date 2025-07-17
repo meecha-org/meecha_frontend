@@ -117,7 +117,7 @@ struct ContentView: View {
                         }
                         .buttonStyle(.plain)
                         .padding(.trailing, 30)
-                    }
+                    }   // ピン追加ボタン
                 }   // VStack
                 .padding(.bottom, 120)
             }   //
