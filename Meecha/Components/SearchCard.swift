@@ -93,7 +93,7 @@ struct SearchCard: View {
                 .frame(width: 330)
             }
         }   // ZStack
-        .frame(height: 90)
+        .frame(width: 330 , height: 90)
         .onTapGesture {
             isSetting = false
         }

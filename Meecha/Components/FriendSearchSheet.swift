@@ -8,6 +8,7 @@ import SwiftUI
 
 struct FriendSearchSheet: View {
     @State var isSearchText: String = ""
+    @State var isSearchButton: Bool = false
     var body: some View {
         VStack(alignment: .center, spacing: 32) {
             Text("ユーザー検索")
@@ -40,6 +41,7 @@ struct FriendSearchSheet: View {
                 // 検索ボタン
                 Button(action:{
                     print("\(isSearchText)")
+                    isSearchButton = true
                 }){
                     ZStack{
                         if isSearchText.isEmpty {
@@ -56,20 +58,27 @@ struct FriendSearchSheet: View {
                     }
                 }   // 検索ボタン
             }   // HStack
-            
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
-                .frame(width: 330, height: 350)
+            ZStack{
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.white)
+                    .frame(width: 330, height: 350)
                 // 角丸ボーダー
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.main, lineWidth: 1)
-                )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.main, lineWidth: 1)
+                    )
+                
+                ScrollView{
+                    if isSearchButton {
+                        SearchComp()
+                    }
+                }
+            }
             Spacer()
         }   // VStack
         .frame(height: 450)
-    }
-}
+    }   // body
+}   // View
 
 #Preview {
     FriendSearchSheet()
