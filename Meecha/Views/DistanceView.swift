@@ -39,7 +39,7 @@ struct MapWrapperView: View {
                             Circle()
                                 .fill(Color.white)
                                 .frame(width: 60, height: 60)
-                            // 角丸ボーダー
+                                // 角丸ボーダー
                                 .overlay(
                                     Circle()
                                         .stroke(Color.main, lineWidth: 1)

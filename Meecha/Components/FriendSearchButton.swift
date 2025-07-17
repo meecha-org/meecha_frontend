@@ -18,8 +18,9 @@ struct FriendSearchButton: View {
                 .foregroundStyle(Color.icon)       
         }
         .sheet(isPresented: $showModalSheet) {
-            VStack{
-                
+            ZStack{
+                Color.bg.ignoresSafeArea()
+                FriendSearchSheet()
             }
             .presentationDetents([.height(500)])
 
