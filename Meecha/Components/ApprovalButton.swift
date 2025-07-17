@@ -31,11 +31,19 @@ struct  YesButtonStyle: View {
 // 拒否ボタン
 struct NoButtonStyle : View {
     @Binding var NoButton: Bool
+    
+    // リクエストID
+    public var RequestId: String
+    
     var body: some View {
         // 削除ボタン
         Button(action: {
             NoButton = true
-            print("削除ボタン\(NoButton)")
+            
+            debugPrint("リクエストをキャンセルします:\(RequestId)")
+            
+            // リクエストをキャンセルする
+            cancelFriend(requestId: RequestId)
         }){
             ZStack {
                 Circle()
@@ -58,13 +66,42 @@ struct ApprovalButton: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            
             // 承認ボタン
-            YesButtonStyle(YesButton: $YesButton)
-            
-            // 拒否ボタン
-            NoButtonStyle(NoButton: $NoButton)
-            
+            Button(action: {
+                YesButton = true
+                print("承認ボタン\(YesButton)")
+                print("requestId:\(RequestId)")
+                // リクエストを承認する
+                acceptFriendRequest(requestId: RequestId)
+            }){
+                ZStack {
+                    Circle()
+                        .fill(Color.bg)
+                        .frame(width: 24, height: 24)
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .foregroundStyle(Color.main)
+                        .frame(width: 11, height: 8)
+                }
+            }   // Button
+            // 削除ボタン
+            Button(action: {
+                NoButton = true
+                print("削除ボタン\(NoButton)")
+                
+                //リクエストを拒否する
+                rejectFriend(requestId: RequestId)
+            }){
+                ZStack {
+                    Circle()
+                        .fill(Color.redBg)
+                        .frame(width: 24, height: 24)
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .foregroundStyle(Color.meechaRed)
+                        .frame(width: 9, height: 9)
+                }
+            }   // Button
         }   // VStack
     }   // body
 }   // View

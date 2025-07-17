@@ -17,15 +17,10 @@
 		<string>ZenMaruGothic-Bold.ttf</string>
 		<string>ZenMaruGothic-Black.ttf</string>
 	</array>
-    
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>バックグラウンドで位置情報を監視するために必要です</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>位置情報を取得するために必要です</string>
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>location</string>
-    </array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>nearby-interaction</string>
+	</array>
 </dict>
 </plist>
-
