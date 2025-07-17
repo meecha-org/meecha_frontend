@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct FriendSearchSheet: View {
-    @State var isSearchID: String = ""
+    @State var isSearchText: String = ""
     var body: some View {
         VStack(alignment: .center, spacing: 32) {
             Text("ユーザー検索")
@@ -16,13 +16,13 @@ struct FriendSearchSheet: View {
             HStack(spacing: 4){
                 // 検索フィールド
                 ZStack{
-                    TextField("ユーザーID", text: $isSearchID)
+                    TextField("ユーザーネーム", text: $isSearchText)
                         .zenFont(.regular, size: 12, color: .font)
                         .frame(width: 200)
                         .textFieldStyle(.roundedBorder)
                         .keyboardType(.emailAddress)    //キーボードの種類指定
                         .onSubmit{
-                            print("\(isSearchID)")
+                            print("\(isSearchText)")
                         }
                         // 角丸ボーダー
                         .overlay(
@@ -39,10 +39,10 @@ struct FriendSearchSheet: View {
                 
                 // 検索ボタン
                 Button(action:{
-                    
+                    print("\(isSearchText)")
                 }){
                     ZStack{
-                        if isSearchID.isEmpty {
+                        if isSearchText.isEmpty {
                             RoundedRectangle(cornerRadius: 5)
                                 .frame(width: 40, height: 35)
                                 .foregroundStyle(Color.formFont)
