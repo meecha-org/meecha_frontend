@@ -33,7 +33,7 @@ struct FriendCard: View {
                         .resizable()
                         .frame(width: 55, height: 55)
                         .cornerRadius(50)
-                    // 角丸ボーダー
+                        // 角丸ボーダー
                         .overlay(
                             RoundedRectangle(cornerRadius: 50)
                                 .stroke(Color.formBorder, lineWidth: 1.5)
