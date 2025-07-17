@@ -62,18 +62,18 @@ struct FriendCard: View {
             .frame(width: 250)
             
             //設定ボタン
-            Button(action:{
-                isSetting = true
-            }){
-                HStack {
-                    Spacer()
+            HStack{
+                Spacer()
+                Button(action:{
+                    isSetting = true
+                }){
                     FriendSettingButton()
                 }
+                .buttonStyle(.plain)
             }
             .padding(.bottom, 35)
             .frame(width: 260)
-            .buttonStyle(.plain)
-            
+
             if isSetting {
                 HStack {
                     Spacer()
