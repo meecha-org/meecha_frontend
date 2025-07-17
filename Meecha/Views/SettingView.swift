@@ -9,11 +9,15 @@ import SwiftUI
 
 struct SettingView: View {
     @State var isDistance: Bool = false
+    
+    @State var UserName: String = ""
+    @State var UserID: String = ""
+    
     var body: some View {
         if isDistance{ MapWrapperView() }
         else{
             VStack(spacing: 32) {
-                SettingAccountInfo(Myicon: .myicon, MyName: "りんご", MyID: "1234567890")
+                SettingAccountInfo(Myicon: .myicon, MyName: UserName, MyID: UserID)
                     .padding(.top, 150)
                 
                 RoundedRectangle(cornerRadius: 5)
@@ -34,6 +38,19 @@ struct SettingView: View {
                     SettingListsGroup(isDistance: $isDistance)
                 }
                 Spacer()
+            }.task {
+                do {
+                    // 自身の情報取得
+                    let response = try await FetchInfo()
+                    
+                    debugPrint("userInfo: \(response)")
+                    
+                    // 情報を設定
+                    UserName = response.name
+                    UserID = response.userId
+                } catch {
+                    debugPrint(error)
+                }
             }   // VStack
         }
     }   // body
