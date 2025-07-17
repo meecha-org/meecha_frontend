@@ -12,6 +12,8 @@ struct FriendCard: View {
     @State var name: String         // 名前
     
     @State var isSetting: Bool = false
+    @State var NoButton: Bool = false
+
     var body: some View {
         ZStack{
             // カード背景
@@ -60,7 +62,12 @@ struct FriendCard: View {
                 Spacer()
             }   // HStack
             .frame(width: 250)
-            
+            HStack{
+                Spacer()
+                NoButtonStyle(NoButton: $NoButton, RequestId: "")
+                    .padding(.top, 30)
+            }
+            .frame(width: 265)
             //設定ボタン
             HStack{
                 Spacer()
