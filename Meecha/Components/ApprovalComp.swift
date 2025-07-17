@@ -16,6 +16,8 @@ struct ApprovalComp: View {
 
     var body: some View {
         VStack{
+            
+            
             ForEach(approvalsModel.Approvals){ i in
                 ApprovalCard(iconUrl:"https://k8s-meecha.mattuu.com/auth/assets/\(i.targetId).png", name: i.targetName,requestId: i.id)
             }

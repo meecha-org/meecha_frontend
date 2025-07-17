@@ -14,12 +14,6 @@ struct FriendCard: View {
     @State var isSetting: Bool = false
     var body: some View {
         ZStack{
-            // 背景タップ領域
-               Color.clear
-                   .contentShape(Rectangle())
-                   .onTapGesture {
-                       isSetting = false
-                   }
             // カード背景
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
@@ -89,11 +83,18 @@ struct FriendCard: View {
                 .frame(width: 330)
             }
         }   // ZStack
+        .frame(height: 90)
+        .onTapGesture {
+            isSetting = false
+        }
     }   // body
 }   // View
 
 #Preview {
-    FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+    VStack{
+        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+    }
 }
 
 

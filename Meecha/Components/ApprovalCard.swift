@@ -12,6 +12,7 @@ struct ApprovalCard: View {
     @State var iconUrl: String
     @State var name: String
     
+    @State var isSetting: Bool = false
     // リクエストID
     public var requestId: String
     
@@ -66,7 +67,7 @@ struct ApprovalCard: View {
            
             //設定ボタン
             Button(action:{
-                
+                isSetting = true
             }){
                 HStack {
                     Spacer()
@@ -75,8 +76,19 @@ struct ApprovalCard: View {
             }
             .padding(.bottom, 35)
             .frame(width: 260)
-            
+            if isSetting {
+                HStack {
+                    Spacer()
+                    FriendSettingFrame()
+                }
+                .padding(.bottom, 50)
+                .frame(width: 330)
+            }
         }   // ZStack
+        .frame(height: 90)
+        .onTapGesture {
+            isSetting = false
+        }
     }   // body
 }   // View
 
