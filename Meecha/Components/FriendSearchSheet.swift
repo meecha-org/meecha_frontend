@@ -9,6 +9,8 @@ import SwiftUI
 struct FriendSearchSheet: View {
     @State var isSearchText: String = ""
     @State var isSearchButton: Bool = false
+    @State var searchText : String = ""
+    
     var body: some View {
         VStack(alignment: .center, spacing: 32) {
             Text("ユーザー検索")
@@ -23,7 +25,9 @@ struct FriendSearchSheet: View {
                         .textFieldStyle(.roundedBorder)
                         .keyboardType(.emailAddress)    //キーボードの種類指定
                         .onSubmit{
-                            print("\(isSearchText)")
+//                            print("\(isSearchText)")
+                            // 検索を実装する
+                            searchText = isSearchText
                         }
                         // 角丸ボーダー
                         .overlay(
@@ -70,7 +74,7 @@ struct FriendSearchSheet: View {
                 
                 ScrollView{
                     if isSearchButton {
-                        SearchComp()
+                        SearchComp(searchText: searchText)
                     }
                 }
             }
