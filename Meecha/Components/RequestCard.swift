@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct RequestCard: View {
-    @State var iconImage: ImageResource
+    @State var iconUrl: String
     @State var name: String
+    
+    // リクエストID
+    public var requestID: String
     
     @State var YesButton: Bool = false
     @State var NoButton: Bool = false
@@ -28,15 +31,18 @@ struct RequestCard: View {
             // カードコンテンツ
             HStack{
                 //アイコン
-                Image(iconImage)
+                AsyncImage(url:URL(string: iconUrl)) { response in
+                    response.image?
                     .resizable()
                     .frame(width: 55, height: 55)
                     .cornerRadius(50)
-                // 角丸ボーダー
+                    // 角丸ボーダー
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.main, lineWidth: 1)
                     )
+                    
+                }
                 
                 Spacer()
                 ZStack{
@@ -73,7 +79,7 @@ struct RequestCard: View {
 }   // View
 
 #Preview {
-    RequestCard(iconImage: .iconSample, name: "かれんこん")
+    RequestCard(iconUrl:"https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん",requestID: "aaa")
 }
 
 

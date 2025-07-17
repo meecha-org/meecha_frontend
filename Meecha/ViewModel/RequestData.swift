@@ -10,9 +10,10 @@ import Foundation
 
 // Identifiableプロトコル ⇨ 値が一意(ユニーク)であることを保証する
 struct RequestData: Identifiable {
-    let name: String    // 名前
-    let iconImage: ImageResource
-    let id = UUID()     // 識別するためのIDを生成
+    let name: String    // 送信先の名前
+    let targetId: String       // 送信先のId
+    let requestId: String     // 識別するためのリクエストID
+    let id = UUID()     
 }
 
 class RequestModel: ObservableObject {
@@ -22,9 +23,9 @@ class RequestModel: ObservableObject {
     init(){
         //仮データ
         requests = [
-            RequestData(name: "rinringogogo", iconImage: .iconSample9),
-            RequestData(name: "ジェシカ", iconImage: .iconSample10),
-            RequestData(name: "hanacoi", iconImage: .iconSample11)
+//            RequestData(name: "rinringogogo", iconImage: .iconSample9),
+//            RequestData(name: "ジェシカ", iconImage: .iconSample10),
+//            RequestData(name: "hanacoi", iconImage: .iconSample11)
         ]
     }
 }
