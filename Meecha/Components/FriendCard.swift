@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct FriendCard: View {
-    @State var iconImage: String
-    @State var name: String
+    @State var iconImage: String    // アイコン
+    @State var name: String         // 名前
+    
+    @State var isSetting: Bool = false
     var body: some View {
         ZStack{
             // カード背景
@@ -61,7 +63,7 @@ struct FriendCard: View {
             
             //設定ボタン
             Button(action:{
-                
+                isSetting = true
             }){
                 HStack {
                     Spacer()
@@ -70,12 +72,29 @@ struct FriendCard: View {
             }
             .padding(.bottom, 35)
             .frame(width: 260)
+            .buttonStyle(.plain)
+            
+            if isSetting {
+                HStack {
+                    Spacer()
+                    FriendSettingFrame()
+                }
+                .padding(.bottom, 50)
+                .frame(width: 330)
+            }
         }   // ZStack
+        .frame(height: 90)
+        .onTapGesture {
+            isSetting = false
+        }
     }   // body
 }   // View
 
 #Preview {
-    FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+    VStack{
+        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+    }
 }
 
 

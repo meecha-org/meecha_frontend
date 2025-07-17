@@ -11,6 +11,7 @@ struct RequestCard: View {
     @State var iconUrl: String
     @State var name: String
     
+    @State var isSetting: Bool = false
     // リクエストID
     public var requestID: String
     
@@ -65,7 +66,7 @@ struct RequestCard: View {
             
             //設定ボタン
             Button(action:{
-                
+                isSetting = true
             }){
                 HStack {
                     Spacer()
@@ -74,7 +75,19 @@ struct RequestCard: View {
             }
             .padding(.bottom, 35)
             .frame(width: 260)
+            if isSetting {
+                HStack {
+                    Spacer()
+                    FriendSettingFrame()
+                }
+                .padding(.bottom, 50)
+                .frame(width: 330)
+            }
         }   // ZStack
+        .frame(height: 90)
+        .onTapGesture {
+            isSetting = false
+        }
     }   // body
 }   // View
 
