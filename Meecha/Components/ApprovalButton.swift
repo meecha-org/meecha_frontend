@@ -31,11 +31,19 @@ struct  YesButtonStyle: View {
 // 拒否ボタン
 struct NoButtonStyle : View {
     @Binding var NoButton: Bool
+    
+    // リクエストID
+    public var RequestId: String
+    
     var body: some View {
         // 削除ボタン
         Button(action: {
             NoButton = true
-            print("削除ボタン\(NoButton)")
+            
+            debugPrint("リクエストをキャンセルします:\(RequestId)")
+            
+            // リクエストをキャンセルする
+            cancelFriend(requestId: RequestId)
         }){
             ZStack {
                 Circle()

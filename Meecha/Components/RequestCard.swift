@@ -54,7 +54,7 @@ struct RequestCard: View {
                     }
                     .frame(width: 130, alignment: .leading)
                     
-                    NoButtonStyle(NoButton: $NoButton)
+                    NoButtonStyle(NoButton: $NoButton,RequestId: requestID)
                         .padding(.leading, 110)
                         .padding(.top, 30)
                 }   // ZStack
