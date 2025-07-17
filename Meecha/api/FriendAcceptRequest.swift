@@ -4,7 +4,7 @@
 //
 //  Created by mattuu0 on 2025/07/17.
 //
-
+//  承認する
 
 import Foundation
 

@@ -1,3 +1,11 @@
+//
+//  FriendReceiveRequest.swift
+//  Meecha
+//
+//  Created by mattuu0 on 2025/07/17.
+//
+//  承認前のフレンド一覧
+
 import Foundation
 
 // MARK: - API Response Structure
@@ -7,8 +15,8 @@ struct FriendReceiveRequestResponse: Codable {
 
 struct FriendReceiveRequest: Codable {
     let id: String
-    let sender: String
-    let senderName: String
+    let sender: String  //送信元のID
+    let senderName: String  //送信元の名前
     let target: String
     let targetName: String
 }

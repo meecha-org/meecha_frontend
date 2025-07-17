@@ -27,6 +27,7 @@ struct MeechaApp: App {
                         LoginView(loginButton: $loginState)
                     }
                 }
+//                MapWrapperView()
             }
             .task {
                 await performInitialLoad()

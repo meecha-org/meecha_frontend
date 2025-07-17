@@ -1,3 +1,8 @@
+//
+//
+//
+//  フレンドリクエストを送る関数
+
 import Foundation
 
 // MARK: - Request Structure

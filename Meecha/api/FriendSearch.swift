@@ -4,7 +4,7 @@
 //
 //  Created by mattuu0 on 2025/07/17.
 //
-
+//  ユーザ検索
 
 import Foundation
 

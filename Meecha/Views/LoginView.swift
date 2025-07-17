@@ -40,7 +40,7 @@ struct LoginView: View {
                                     .zenFont(.medium, size: 12)
                                 TextField("", text: $inputMail)
                                     .zenFont(.regular, size: 12, color: .font)
-                                    .frame(width: 300, height: 45)
+                                    .frame(width: 300)
                                     .textFieldStyle(.roundedBorder)
                                     .keyboardType(.emailAddress)    //キーボードの種類指定
                                     .onSubmit{
@@ -55,7 +55,7 @@ struct LoginView: View {
                                 TextField("", text: $inputPass)
                                     .zenFont(.regular, size: 12, color: .font)
                                     .background(Color.white)
-                                    .frame(width: 300, height: 45)
+                                    .frame(width: 300)
                                     .textFieldStyle(.roundedBorder)
                                     .keyboardType(.asciiCapable)
                                     .onSubmit{

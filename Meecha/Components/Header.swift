@@ -10,16 +10,10 @@ import SwiftUI
 struct Header: View {
     let gradient = LinearGradient(gradient: Gradient(colors: [.bg, .clear]), startPoint: .center, endPoint: .bottom)
     var body: some View {
-        ZStack(){
-            Rectangle()
-                .fill(gradient)
-                .frame(maxWidth: .infinity, maxHeight: 120)
-            
             HStack{
                 Image(.logoSmall)
             }
-            .padding(.top, 20)
-        }
+            .padding(.top, 60)
     }
 }
 #Preview {
