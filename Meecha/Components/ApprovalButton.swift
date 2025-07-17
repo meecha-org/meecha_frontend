@@ -54,6 +54,7 @@ struct NoButtonStyle : View {
 struct ApprovalButton: View {
     @Binding var YesButton: Bool
     @Binding var NoButton: Bool
+    public var RequestId: String
 
     var body: some View {
         HStack(spacing: 8) {

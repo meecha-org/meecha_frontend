@@ -29,8 +29,16 @@ struct FriendConp: View {
                     print("エラーが発生しました: \(error.localizedDescription)")
                 } else if let friends = friends {
                     print("フレンドリスト:")
-                    DispatchQueue.main.async {
-                        self.users = friends
+                    
+                    // 既存のフレンドリクエストを全て削除する
+                    users.removeAll()
+                    
+                    // フレンドを回す
+                    for friend in friends {
+                        print("- 名前: \(friend.name), ID: \(friend.id)")
+                        
+                        // フレンドデータを追加する
+                        users.append(Friend(name: friend.name, id: friend.id))
                     }
                 }
             } catch {

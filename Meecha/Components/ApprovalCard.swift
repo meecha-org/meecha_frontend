@@ -9,11 +9,14 @@
 import SwiftUI
 
 struct ApprovalCard: View {
-    @State var iconImage: ImageResource
+    @State var iconUrl: String
     @State var name: String
     
-    @State var YesButton: Bool = false  // 承認ボタン
-    @State var NoButton: Bool = false   // 拒否ボタン
+    // リクエストID
+    public var requestId: String
+    
+    @State var YesButton: Bool = false
+    @State var NoButton: Bool = false
     var body: some View {
         ZStack{
             // カード背景
@@ -28,16 +31,17 @@ struct ApprovalCard: View {
             
             // カードコンテンツ
             HStack{
-                //アイコン
-                Image(iconImage)
-                    .resizable()
-                    .frame(width: 55, height: 55)
-                    .cornerRadius(50)
+                AsyncImage(url: URL(string: iconUrl)) { response in
+                    response.image?
+                        .resizable()
+                        .frame(width: 55, height: 55)
+                        .cornerRadius(50)
                     // 角丸ボーダー
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50)
-                            .stroke(Color.main, lineWidth: 1)
-                    )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 50)
+                                .stroke(Color.main, lineWidth: 1)
+                        )
+                }
                 
                 Spacer()
                 
@@ -51,7 +55,7 @@ struct ApprovalCard: View {
                     }
                     .frame(width: 130, alignment: .leading)
                     
-                    ApprovalButton(YesButton: $YesButton, NoButton: $NoButton)
+                    ApprovalButton(YesButton: $YesButton, NoButton: $NoButton,RequestId: requestId)
                         .padding(.leading, 110)
                         .padding(.top, 30)
                 }   // ZStack
@@ -77,7 +81,7 @@ struct ApprovalCard: View {
 }   // View
 
 #Preview {
-    ApprovalCard(iconImage: .iconSample, name: "かれんこん")
+    ApprovalCard(iconUrl: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん",requestId: "aaa")
 }
 
 
