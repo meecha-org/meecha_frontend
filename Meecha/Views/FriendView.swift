@@ -10,25 +10,45 @@ import SwiftUI
 struct FriendView: View {
     @State var selectedIndex = 0
     var body: some View {
-        ZStack(){
-            FriendTabTop(selectedIndex: $selectedIndex)
-            
-            VStack{
-                ScrollView{
-                    switch selectedIndex {
-                    case 0:
-                        FriendConp()
-                    case 1:
-                        ApprovalComp()
-                    case 2:
-                        RequestComp()
-                    default:
-                        MapView()
+            ZStack{
+                VStack{
+                    HStack {
+                        Spacer()
+                        FriendSearchButton()
                     }
+                    .padding(.trailing, 30)
+                    .padding(.top, 60)
+                    
+                    Spacer()
                 }
-            }
-            .frame(height: 500)
-            .padding(.top)
-        }   // ZStack
+                
+                ZStack{
+                    FriendTabTop(selectedIndex: $selectedIndex)
+                    
+                    VStack{
+                        ScrollView{
+                            switch selectedIndex {
+                            case 0:
+                                FriendConp()
+                            case 1:
+                                ApprovalComp()
+                            case 2:
+                                RequestComp()
+                            default:
+                                MapView()
+                            }
+                        }
+                    }
+                    .frame(height: 500)
+                    .padding(.top)
+                }
+                .padding(.top, 50)
+        }
+        .edgesIgnoringSafeArea(.all)
+
     }   // body
 }   // View
+
+#Preview {
+    FriendView()
+}
