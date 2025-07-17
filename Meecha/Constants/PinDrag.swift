@@ -4,6 +4,7 @@
 //
 //  Created by 2230220 on 2025/07/17.
 //
+//  ピンドラッグ
 import Foundation
 import SwiftUI
 import MapKit

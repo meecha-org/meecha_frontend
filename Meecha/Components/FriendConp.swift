@@ -37,8 +37,8 @@ struct FriendConp: View {
                 debugPrint(error)
             }
         }
-    }
-}
+    }   // body
+}   // View
 
 #Preview {
     FriendConp()

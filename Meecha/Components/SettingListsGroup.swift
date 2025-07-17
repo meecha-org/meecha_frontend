@@ -8,10 +8,13 @@ import SwiftUI
 
 struct SettingListsGroup: View {
     @State var notice: Bool = false
+    @Binding var isDistance: Bool
     var body: some View {
         VStack(spacing: 20){
             // プライベート範囲
             Button(action:{
+                isDistance = true
+                print("プライベート範囲true")
             }){
                 SettingList(ListText: "プライベート範囲")
             }
@@ -72,8 +75,4 @@ struct SettingListsGroup: View {
             
         }
     }
-}
-
-#Preview {
-    SettingListsGroup()
 }

@@ -9,12 +9,17 @@ import SwiftUI
 
 struct ApprovalComp: View {
     @StateObject private var approvalsModel = ApprovalModel()
+    @State private var users: [FriendReceiveRequestResponse] = []
+    var (friends, error) = getFriendReceiveRequest()
+
     var body: some View {
         VStack{
             ForEach(approvalsModel.Approvals){ i in
                 ApprovalCard(iconImage: i.iconImage, name: i.name)
-                
             }
+//            ForEach(users){ i in
+//                FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/\(i.target).png", name: i.targetName)
+//            }
         }
         .frame(width: 300)
         .padding(.top, 10)

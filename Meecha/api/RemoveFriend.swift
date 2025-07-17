@@ -4,6 +4,7 @@
 //
 //  Created by mattuu0 on 2025/07/17.
 //
+//  フレンド削除
 
 
 import Foundation
