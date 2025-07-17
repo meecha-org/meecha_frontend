@@ -29,6 +29,7 @@ struct ApprovalCard: View {
                         .stroke(Color.main, lineWidth: 1.5)
                 )
             
+            // カードコンテンツ
             HStack{
                 AsyncImage(url: URL(string: iconUrl)) { response in
                     response.image?
@@ -43,6 +44,8 @@ struct ApprovalCard: View {
                 }
                 
                 Spacer()
+                
+                // 名前・ボタン
                 ZStack{
                     HStack{
                         //名前
@@ -56,15 +59,26 @@ struct ApprovalCard: View {
                         .padding(.leading, 110)
                         .padding(.top, 30)
                 }   // ZStack
-               
                 
                 Spacer()
             }   // HStack
             .frame(width: 250)
            
-        }
-    }
-}
+            //設定ボタン
+            Button(action:{
+                
+            }){
+                HStack {
+                    Spacer()
+                    FriendSettingButton()
+                }
+            }
+            .padding(.bottom, 35)
+            .frame(width: 260)
+            
+        }   // ZStack
+    }   // body
+}   // View
 
 #Preview {
     ApprovalCard(iconUrl: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん",requestId: "aaa")
