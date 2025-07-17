@@ -1,23 +1,23 @@
 //
-//  ApprovalCard.swift
+//  SearchCard.swift
 //  Meecha
 //
-//  Created by 2230220 on 2025/07/12.
+//  Created by 2230220 on 2025/07/18.
 //
+
 
 //フレンド画面各カード
 import SwiftUI
 
-struct ApprovalCard: View {
+struct SearchCard: View {
     @State var iconUrl: String
     @State var name: String
+    @State var UserId: String
     
     @State var isSetting: Bool = false
     // リクエストID
-    public var requestId: String
     
-    @State var YesButton: Bool = false
-    @State var NoButton: Bool = false
+    @State var ReqestButton: Bool = false
     var body: some View {
         ZStack{
             // カード背景
@@ -43,6 +43,7 @@ struct ApprovalCard: View {
                                 .stroke(Color.main, lineWidth: 1)
                         )
                 }
+                
                 Spacer()
                 
                 // 名前・ボタン
@@ -54,16 +55,24 @@ struct ApprovalCard: View {
                         Spacer()
                     }
                     .frame(width: 130, alignment: .leading)
-                    
-                    ApprovalButton(YesButton: $YesButton, NoButton: $NoButton,RequestId: requestId)
-                        .padding(.leading, 110)
-                        .padding(.top, 30)
                 }   // ZStack
                 
                 Spacer()
             }   // HStack
             .frame(width: 250)
-           
+            //設定ボタン
+            HStack{
+                Spacer()
+                Button(action:{
+                    print("\(UserId)")
+                    ReqestButton = true
+                }){
+                        RequestButton()
+                }
+            }
+            .padding(.top, 30)
+            .frame(width: 260)
+            
             //設定ボタン
             HStack{
                 Spacer()
@@ -84,7 +93,7 @@ struct ApprovalCard: View {
                 .frame(width: 330)
             }
         }   // ZStack
-        .frame(height: 90)
+        .frame(width: 330 , height: 90)
         .onTapGesture {
             isSetting = false
         }
@@ -92,8 +101,9 @@ struct ApprovalCard: View {
 }   // View
 
 #Preview {
-    ApprovalCard(iconUrl: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん",requestId: "aaa")
+    SearchCard(iconUrl: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん",UserId: "aaa")
 }
+
 
 
 
