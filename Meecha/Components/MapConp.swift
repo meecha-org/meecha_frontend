@@ -23,9 +23,29 @@ struct MapConp: View {
                 ForEach(friendsModel.friends){ i in
                     //フレンドの位置
                     Annotation(i.name ,coordinate: i.coordinate ,anchor: .bottom){
-                        FriendMapPinImg(FriendImg: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png")
+                        FriendMapPinImg(FriendImg: "https://k8s-meecha.mattuu.com/auth/assets/\(i.id).png")
                     }
                 }   // ForEach
+            }.task {
+                GlobalLocationMonitor.shared.locationUpdateCallback = { response in
+                    debugPrint("location response: \(response)")
+                    
+                    // near が存在する時
+                    if response.near.count > 0 || response.removed.count > 0 {
+                        // 存在する時
+                        // 全て削除する
+                        friendsModel.friends.removeAll()
+                        
+                        response.near.forEach { friend in
+                            // 位置情報
+                            let locationData = CLLocationCoordinate2D(latitude: friend.latitude, longitude: friend.longitude)
+                            
+                            // フレンド情報を追加する
+                            friendsModel.friends.append(FriendData(name: "", coordinate: locationData, iconImage: .friendPin, id: friend.userid))
+                        }
+                    }
+                }
+                
             }   // map
             VStack{
                 Rectangle()

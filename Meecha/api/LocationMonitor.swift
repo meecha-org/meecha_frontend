@@ -13,6 +13,7 @@ class GlobalLocationMonitor: NSObject, CLLocationManagerDelegate {
     private var lastData: LocationResponse?
     private var isMonitoring = false
     private let detector = LocationDiffDetector()
+    public var locationUpdateCallback: ((LocationResponse) -> Void)?
     
     private override init() {
         super.init()
@@ -60,6 +61,7 @@ class GlobalLocationMonitor: NSObject, CLLocationManagerDelegate {
         timer?.invalidate()
         timer = nil
         isMonitoring = false
+        locationUpdateCallback = nil
         print("グローバル位置情報監視を停止しました")
     }
     
@@ -111,10 +113,12 @@ class GlobalLocationMonitor: NSObject, CLLocationManagerDelegate {
                     LocalNotificationManager.shared.sendCustomNotification(title: "接近通知", body:"\(newUser.name) さんが近くにいます")
                 }
                 
-//                LocalNotificationManager.shared.notifyNewUsers(users: diff.added)
             } else {
                 print("新しいユーザーの追加なし")
             }
+            
+            // コールバック呼び出し
+            self.locationUpdateCallback?(response!)
         } else {
             print("位置情報更新に失敗しました")
         }
