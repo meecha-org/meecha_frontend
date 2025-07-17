@@ -10,9 +10,9 @@ import Foundation
 
 // Identifiableプロトコル ⇨ 値が一意(ユニーク)であることを保証する
 struct ApprovalData: Identifiable {
-    let name: String    // 名前
-    let iconImage: ImageResource
-    let id = UUID()     // 識別するためのIDを生成
+    let id: String           // リクエストを識別するためのID
+    let targetName: String    // 相手の名前
+    let targetId: String    //相手のID
 }
 
 class ApprovalModel: ObservableObject {
@@ -22,9 +22,9 @@ class ApprovalModel: ObservableObject {
     init(){
         //仮データ
         Approvals = [
-            ApprovalData(name: "ECC太郎", iconImage: .iconSample6),
-            ApprovalData(name: "りんりんご", iconImage: .iconSample7),
-            ApprovalData(name: "みーちゃ", iconImage: .iconSample8)
+//            ApprovalData(id: "aaa", targetName: "ECC太郎", targetId: "aaa"),
+//            ApprovalData(id: "bbb", targetName: "りんりんご", targetId: "bbb"),
+//            ApprovalData(id: "ccc", targetName: "みーちゃ", targetId: "ccc")
         ]
     }
 }

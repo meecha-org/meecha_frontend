@@ -9,6 +9,7 @@ import SwiftUI
 struct ApprovalButton: View {
     @Binding var YesButton: Bool
     @Binding var NoButton: Bool
+    public var RequestId: String
 
     var body: some View {
         HStack(spacing: 8) {
@@ -16,6 +17,9 @@ struct ApprovalButton: View {
             Button(action: {
                 YesButton = true
                 print("承認ボタン\(YesButton)")
+                print("requestId:\(RequestId)")
+                // リクエストを承認する
+                acceptFriendRequest(requestId: RequestId)
             }){
                 ZStack {
                     Circle()
@@ -31,6 +35,9 @@ struct ApprovalButton: View {
             Button(action: {
                 NoButton = true
                 print("削除ボタン\(NoButton)")
+                
+                //リクエストを拒否する
+                rejectFriend(requestId: RequestId)
             }){
                 ZStack {
                     Circle()
