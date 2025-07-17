@@ -31,14 +31,14 @@ struct FriendConp: View {
                     print("フレンドリスト:")
                     
                     // 既存のフレンドリクエストを全て削除する
-                    friendsModel.friends.removeAll()
+                    users.removeAll()
                     
                     // フレンドを回す
                     for friend in friends {
                         print("- 名前: \(friend.name), ID: \(friend.id)")
                         
                         // フレンドデータを追加する
-                        friendsModel.friends.append(FriendData(name: friend.name, coordinate: .ECC, iconImage: .iconSample, id:friend.id))
+                        users.append(Friend(name: friend.name, id: friend.id))
                     }
                 }
             } catch {
