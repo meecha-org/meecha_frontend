@@ -12,8 +12,8 @@ struct ApprovalCard: View {
     @State var iconImage: ImageResource
     @State var name: String
     
-    @State var YesButton: Bool = false
-    @State var NoButton: Bool = false
+    @State var YesButton: Bool = false  // 承認ボタン
+    @State var NoButton: Bool = false   // 拒否ボタン
     var body: some View {
         ZStack{
             // カード背景
@@ -26,6 +26,7 @@ struct ApprovalCard: View {
                         .stroke(Color.main, lineWidth: 1.5)
                 )
             
+            // カードコンテンツ
             HStack{
                 //アイコン
                 Image(iconImage)
@@ -39,6 +40,8 @@ struct ApprovalCard: View {
                     )
                 
                 Spacer()
+                
+                // 名前・ボタン
                 ZStack{
                     HStack{
                         //名前
@@ -52,15 +55,26 @@ struct ApprovalCard: View {
                         .padding(.leading, 110)
                         .padding(.top, 30)
                 }   // ZStack
-               
                 
                 Spacer()
             }   // HStack
             .frame(width: 250)
            
-        }
-    }
-}
+            //設定ボタン
+            Button(action:{
+                
+            }){
+                HStack {
+                    Spacer()
+                    FriendSettingButton()
+                }
+            }
+            .padding(.bottom, 35)
+            .frame(width: 260)
+            
+        }   // ZStack
+    }   // body
+}   // View
 
 #Preview {
     ApprovalCard(iconImage: .iconSample, name: "かれんこん")

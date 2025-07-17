@@ -34,7 +34,7 @@ struct FriendCard: View {
                             RoundedRectangle(cornerRadius: 50)
                                 .stroke(Color.formBorder, lineWidth: 1.5)
                         )
-                }
+                }   // AsyncImage
                 
                 Spacer()
                 VStack{
@@ -58,10 +58,21 @@ struct FriendCard: View {
                 Spacer()
             }   // HStack
             .frame(width: 250)
-           
-        }
-    }
-}
+            
+            //設定ボタン
+            Button(action:{
+                
+            }){
+                HStack {
+                    Spacer()
+                    FriendSettingButton()
+                }
+            }
+            .padding(.bottom, 35)
+            .frame(width: 260)
+        }   // ZStack
+    }   // body
+}   // View
 
 #Preview {
     FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
