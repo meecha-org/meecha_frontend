@@ -9,8 +9,6 @@ import SwiftUI
 
 struct CustomTabView: View {
     @State private var selectedIndex = 1
-    
-    let gradient = LinearGradient(gradient: Gradient(colors: [.clear, .bg]), startPoint: .top, endPoint: .center)
     let tabIcons = ["Users","MapPin", "UserCircle"] //アイコン
     let tabIconFill = ["UsersFill","MapPinFill","UserCircleFill"]
     
@@ -34,14 +32,11 @@ struct CustomTabView: View {
             
             // カスタムタブバー
             VStack {
-                
                 Header()
                 Spacer()
                 
                 ZStack {
-                    Rectangle()
-                        .fill(gradient)
-                        .frame(maxWidth: .infinity, maxHeight: 120)
+                   
                     HStack(){
                         HStack(alignment: .bottom) {
                             ForEach(0..<tabIcons.count, id: \.self) { i in
@@ -69,7 +64,7 @@ struct CustomTabView: View {
                         .padding(.top, 20)
                     }   //HStack
                     .padding(.top, 10)
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 50)
                 }
             }
         }   // VStack

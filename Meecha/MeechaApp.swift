@@ -12,6 +12,7 @@ struct MeechaApp: App {
     @State private var isLoading = true
     @State private var hasError = false
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
             ZStack{
@@ -26,9 +27,15 @@ struct MeechaApp: App {
                         LoginView(loginButton: $loginState)
                     }
                 }
+//                MapWrapperView()
             }
             .task {
                 await performInitialLoad()
+                
+                // 位置情報の監視を追加
+                GlobalLocationMonitor.shared.startMonitoring()
+                
+                setupAndUseNotifications()
             }
         }
     }
@@ -40,13 +47,41 @@ struct MeechaApp: App {
             isLoading = false
             
             if userInfo.userId == "" {
+                // ログイン失敗にする
                 loginState = false
                 return
             }
+            
+            // トークンを設定
+            AuthTokenManager.shared.refreshToken = getKeyChain(key: Config.rfTokenKey)
             loginState = true
         } catch {
             hasError = true
             isLoading = false
         }
+    }
+}
+
+// MARK: - AppDelegateでの設定例
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // 通知デリゲートを設定
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+}
+
+// MARK: - 通知デリゲート
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // アプリがフォアグラウンドにいる時の通知表示
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound, .badge])
+    }
+    
+    // 通知をタップした時の処理
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        print("通知がタップされました: \(userInfo)")
+        completionHandler()
     }
 }

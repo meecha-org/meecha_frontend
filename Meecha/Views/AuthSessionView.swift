@@ -12,7 +12,7 @@ import AuthenticationServices
 struct AuthSessionView: UIViewControllerRepresentable {
     var callback: (URL, Bool) -> Void
     
-    let authURL = "https://k8s-meecha.mattuu.com/auth/oauth/google?ismobile=1"
+    let authURL = Config.apiBaseURL + "/auth/oauth/google?ismobile=1"
     
     let customURLScheme = "authbase"
     
