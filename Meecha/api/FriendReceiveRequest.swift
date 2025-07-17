@@ -10,6 +10,10 @@ import Foundation
 
 // MARK: - API Response Structure
 struct FriendReceiveRequestResponse: Codable {
+    let requests: [FriendReceiveRequest]
+}
+
+struct FriendReceiveRequest: Codable {
     let id: String
     let sender: String  //送信元のID
     let senderName: String  //送信元の名前
@@ -18,11 +22,11 @@ struct FriendReceiveRequestResponse: Codable {
 }
 
 // MARK: - API Function
-func getFriendReceiveRequest() -> ([FriendReceiveRequestResponse], Bool) {
+func getFriendReceiveRequest() -> (FriendReceiveRequestResponse?, Bool) {
     // URL生成
     guard let url = URL(string: Config.apiBaseURL + "/app/friend/recvrequest") else {
         print("Error: Failed to create URL")
-        return ([], false)
+        return (nil, false)
     }
     
     // アクセストークン取得
@@ -31,7 +35,7 @@ func getFriendReceiveRequest() -> ([FriendReceiveRequestResponse], Bool) {
     // 取得できたか判定
     if accessToken.success == false {
         print("Error: Failed to get access token")
-        return ([], false)
+        return (nil, false)
     }
     
     // HTTPリクエストを作成
@@ -44,7 +48,7 @@ func getFriendReceiveRequest() -> ([FriendReceiveRequestResponse], Bool) {
     
     // 同期実行の実装
     let semaphore = DispatchSemaphore(value: 0)
-    var result: ([FriendReceiveRequestResponse], Bool) = ([], false)
+    var result: (FriendReceiveRequestResponse?, Bool) = (nil, false)
     
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         defer { semaphore.signal() }
@@ -84,8 +88,9 @@ func getFriendReceiveRequest() -> ([FriendReceiveRequestResponse], Bool) {
         // JSONデコード
         do {
             let decoder = JSONDecoder()
-            let friendRequests = try decoder.decode([FriendReceiveRequestResponse].self, from: data)
-            result = (friendRequests, true)
+            let friendRequests = try decoder.decode([FriendReceiveRequest].self, from: data)
+            let response = FriendReceiveRequestResponse(requests: friendRequests)
+            result = (response, true)
             print("Success: Decoded \(friendRequests.count) friend requests")
         } catch {
             print("Error: JSON decode failed - \(error.localizedDescription)")

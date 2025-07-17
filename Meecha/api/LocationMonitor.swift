@@ -10,7 +10,9 @@ class GlobalLocationMonitor: NSObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     private var timer: Timer?
     private var currentLocation: CLLocation?
+    private var lastData: LocationResponse?
     private var isMonitoring = false
+    private let detector = LocationDiffDetector()
     
     private override init() {
         super.init()
@@ -96,6 +98,23 @@ class GlobalLocationMonitor: NSObject, CLLocationManagerDelegate {
         
         if success {
             print("位置情報更新に成功しました: \(response)")
+            
+            // 差分を取得する
+            let (diff, hasChanges) = detector.detectDifference(newResponse: response!)
+            
+            // 変更があるか判定
+            if hasChanges {
+                print("新しいユーザーが追加されました")
+                for newUser in diff.added {
+                    
+                    print("- \(newUser.name) (ID: \(newUser.userid))")
+                    LocalNotificationManager.shared.sendCustomNotification(title: "接近通知", body:"\(newUser.name) さんが近くにいます")
+                }
+                
+//                LocalNotificationManager.shared.notifyNewUsers(users: diff.added)
+            } else {
+                print("新しいユーザーの追加なし")
+            }
         } else {
             print("位置情報更新に失敗しました")
         }
