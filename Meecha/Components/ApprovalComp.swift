@@ -10,7 +10,9 @@ import SwiftUI
 struct ApprovalComp: View {
     @StateObject private var approvalsModel = ApprovalModel()
     @State private var users: [FriendReceiveRequestResponse] = []
-    var (friends, error) = getFriendReceiveRequest()
+    var (response, success) = getFriendReceiveRequest()
+    
+    
 
     var body: some View {
         VStack{
