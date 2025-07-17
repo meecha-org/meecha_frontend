@@ -1,73 +1,78 @@
 //
-//  FriendCard.swift
+//  SearchCard.swift
 //  Meecha
 //
-//  Created by 2230220 on 2025/07/10.
+//  Created by 2230220 on 2025/07/18.
 //
+
+
 //フレンド画面各カード
 import SwiftUI
 
-struct FriendCard: View {
-    @State var iconImage: String    // アイコン
-    @State var name: String         // 名前
+struct SearchCard: View {
+    @State var iconUrl: String
+    @State var name: String
+    @State var UserId: String
     
     @State var isSetting: Bool = false
-    @State var NoButton: Bool = false
-
+    // リクエストID
+    
+    @State var ReqestButton: Bool = false
     var body: some View {
         ZStack{
             // カード背景
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 9)
                 .fill(Color.white)
                 .frame(width: 280, height: 70)
                 // 角丸ボーダー
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.formBorder, lineWidth: 1)
+                        .stroke(Color.main, lineWidth: 1.5)
                 )
             
+            // カードコンテンツ
             HStack{
-                //アイコン
-                AsyncImage(url: URL(string: iconImage)) { resimage in
-                    resimage.image?
+                AsyncImage(url: URL(string: iconUrl)) { response in
+                    response.image?
                         .resizable()
                         .frame(width: 55, height: 55)
                         .cornerRadius(50)
                     // 角丸ボーダー
                         .overlay(
                             RoundedRectangle(cornerRadius: 50)
-                                .stroke(Color.formBorder, lineWidth: 1.5)
+                                .stroke(Color.main, lineWidth: 1)
                         )
-                }   // AsyncImage
+                }
                 
                 Spacer()
-                VStack{
-                    HStack(spacing: 2){
-                        Circle()
-                            .fill(Color.formFont)
-                            .frame(width: 8, height: 8)
-                        Text("どこにいるかわからない")
-                            .zenFont(.medium, size: 9, color: .formFont)
-                        Spacer()
-                    }
+                
+                // 名前・ボタン
+                ZStack{
                     HStack{
                         //名前
                         Text("\(name)")
                             .zenFont(.medium, size: 14, color: .font)
                         Spacer()
                     }
-                }   // VStack
-                .frame(width: 130, alignment: .leading)
+                    .frame(width: 130, alignment: .leading)
+                }   // ZStack
                 
                 Spacer()
             }   // HStack
             .frame(width: 250)
+            //設定ボタン
             HStack{
                 Spacer()
-                NoButtonStyle(NoButton: $NoButton, RequestId: "")
-                    .padding(.top, 30)
+                Button(action:{
+                    print("\(UserId)")
+                    ReqestButton = true
+                }){
+                        RequestButton()
+                }
             }
-            .frame(width: 265)
+            .padding(.top, 30)
+            .frame(width: 260)
+            
             //設定ボタン
             HStack{
                 Spacer()
@@ -76,11 +81,9 @@ struct FriendCard: View {
                 }){
                     FriendSettingButton()
                 }
-                .buttonStyle(.plain)
             }
             .padding(.bottom, 35)
             .frame(width: 260)
-
             if isSetting {
                 HStack {
                     Spacer()
@@ -90,7 +93,7 @@ struct FriendCard: View {
                 .frame(width: 330)
             }
         }   // ZStack
-        .frame(height: 90)
+        .frame(width: 330 , height: 90)
         .onTapGesture {
             isSetting = false
         }
@@ -98,11 +101,10 @@ struct FriendCard: View {
 }   // View
 
 #Preview {
-    VStack{
-        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
-        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
-    }
+    SearchCard(iconUrl: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん",UserId: "aaa")
 }
+
+
 
 
 

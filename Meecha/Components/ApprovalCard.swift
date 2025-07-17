@@ -43,7 +43,6 @@ struct ApprovalCard: View {
                                 .stroke(Color.main, lineWidth: 1)
                         )
                 }
-                
                 Spacer()
                 
                 // 名前・ボタン
@@ -66,11 +65,11 @@ struct ApprovalCard: View {
             .frame(width: 250)
            
             //設定ボタン
-            Button(action:{
-                isSetting = true
-            }){
-                HStack {
-                    Spacer()
+            HStack{
+                Spacer()
+                Button(action:{
+                    isSetting = true
+                }){
                     FriendSettingButton()
                 }
             }
