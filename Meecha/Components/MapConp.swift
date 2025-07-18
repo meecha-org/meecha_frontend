@@ -23,7 +23,8 @@ struct MapConp: View {
                 ForEach(friendsModel.friends){ i in
                     //フレンドの位置
                     Annotation(i.name ,coordinate: i.coordinate ,anchor: .bottom){
-                        FriendMapPinImg(FriendImg: "https://k8s-meecha.mattuu.com/auth/assets/\(i.id).png")
+//                        FriendMapPinImg(FriendImg: "https://k8s-meecha.mattuu.com/auth/assets/\(i.NearUserId).png")
+                        SimpleFriendMapPinImg(FriendImg: "https://k8s-meecha.mattuu.com/auth/assets/\(i.NearUserId).png")
                     }
                 }   // ForEach
             }.task {
@@ -39,9 +40,9 @@ struct MapConp: View {
                         response.near.forEach { friend in
                             // 位置情報
                             let locationData = CLLocationCoordinate2D(latitude: friend.latitude, longitude: friend.longitude)
-                            
+                            debugPrint("NearUserId: \(friend.userid)")
                             // フレンド情報を追加する
-                            friendsModel.friends.append(FriendData(name: "", coordinate: locationData, iconImage: .friendPin, id: friend.userid))
+                            friendsModel.friends.append(FriendData(name: "", coordinate: locationData, iconImage: .friendPin, NearUserId: friend.userid))
                         }
                     }
                 }
