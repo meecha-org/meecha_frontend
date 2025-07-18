@@ -11,7 +11,6 @@ struct FriendCard: View {
     @State var iconImage: String    // アイコン
     @State var name: String         // 名前
     
-    @State var isSetting: Bool = false
     @State var NoButton: Bool = false
 
     var body: some View {
@@ -68,32 +67,8 @@ struct FriendCard: View {
                     .padding(.top, 30)
             }
             .frame(width: 265)
-            //設定ボタン
-            HStack{
-                Spacer()
-                Button(action:{
-                    isSetting = true
-                }){
-                    FriendSettingButton()
-                }
-                .buttonStyle(.plain)
-            }
-            .padding(.bottom, 35)
-            .frame(width: 260)
-
-            if isSetting {
-                HStack {
-                    Spacer()
-                    FriendSettingFrame()
-                }
-                .padding(.bottom, 50)
-                .frame(width: 330)
-            }
         }   // ZStack
         .frame(height: 90)
-        .onTapGesture {
-            isSetting = false
-        }
     }   // body
 }   // View
 

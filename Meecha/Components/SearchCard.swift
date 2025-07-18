@@ -84,19 +84,9 @@ struct SearchCard: View {
             }
             .padding(.bottom, 35)
             .frame(width: 260)
-            if isSetting {
-                HStack {
-                    Spacer()
-                    FriendSettingFrame()
-                }
-                .padding(.bottom, 50)
-                .frame(width: 330)
-            }
+            
         }   // ZStack
         .frame(width: 330 , height: 90)
-        .onTapGesture {
-            isSetting = false
-        }
     }   // body
 }   // View
 

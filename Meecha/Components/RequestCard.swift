@@ -62,18 +62,6 @@ struct RequestCard: View {
                 Spacer()
             }   // HStack
             .frame(width: 250)
-            
-            //設定ボタン
-            HStack{
-                Spacer()
-                Button(action:{
-                    
-                }){
-                    FriendSettingButton()
-                }
-            }
-            .padding(.bottom, 35)
-            .frame(width: 260)
         }   // ZStack
     }   // body
 }   // View
