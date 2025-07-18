@@ -12,14 +12,14 @@ struct LoginView: View {
     @State var inputPassConf: String = ""
     
     //ボタン
-    @Binding var loginButton: Bool
     @State var googleButton: Bool = false
-    @State var IsLogin: Bool = false
-    
+//    @State var IsLogin: Bool = false
+    @AppStorage("isLoggedState") var isLoggedState: Bool = false
+
     @State private var code: String?
     
     var body: some View {
-        if IsLogin {
+        if isLoggedState {
             CustomTabView()
         } else {
             ZStack{
@@ -94,7 +94,7 @@ struct LoginView: View {
                                             AuthTokenManager.shared.refreshToken = getKeyChain(key: Config.rfTokenKey)
                                             
                                             // ログインに成功した時
-                                            IsLogin = true
+                                            isLoggedState = true
                                             
                                         }
                                     }
@@ -110,7 +110,7 @@ struct LoginView: View {
                     
                     //ログインボタン
                     Button(action: {
-                        loginButton = true
+                        isLoggedState = true
                         print("ログイン: mail: \(inputMail), pass: \(inputPass)")
                     }){
                         ZStack{

@@ -65,6 +65,7 @@ struct SearchCard: View {
                 Spacer()
                 Button(action:{
                     print("\(UserId)")
+                    sendFriendRequest(userid: UserId)
                     ReqestButton = true
                 }){
                         RequestButton()
@@ -73,30 +74,8 @@ struct SearchCard: View {
             .padding(.top, 30)
             .frame(width: 260)
             
-            //設定ボタン
-            HStack{
-                Spacer()
-                Button(action:{
-                    isSetting = true
-                }){
-                    FriendSettingButton()
-                }
-            }
-            .padding(.bottom, 35)
-            .frame(width: 260)
-            if isSetting {
-                HStack {
-                    Spacer()
-                    FriendSettingFrame()
-                }
-                .padding(.bottom, 50)
-                .frame(width: 330)
-            }
         }   // ZStack
         .frame(width: 330 , height: 90)
-        .onTapGesture {
-            isSetting = false
-        }
     }   // body
 }   // View
 

@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-// 申請
+// 申請ボタン
 struct  RequestButton: View {
     var body: some View {
             ZStack {
@@ -18,3 +18,8 @@ struct  RequestButton: View {
             }
     }   //body
 }   // View
+
+
+#Preview {
+    RequestButton()
+}

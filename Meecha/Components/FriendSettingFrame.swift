@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FriendSettingFrame: View {
     @State var isBlockd: Bool = false
+    
     var body: some View {
         // 灰色ボーダー
         VStack{
@@ -17,8 +18,9 @@ struct FriendSettingFrame: View {
                 // ボタンリスト
                 VStack(spacing: 4){
                     Button("ブロック", action:{
-                        isBlockd = true
-                        print("ブロックボタン")
+//                        isBlockd = true
+//                        print("ブロックボタン")
+                        
                     })
                     .zenFont(.medium, size: 9, color: .meechaRed)
                 }

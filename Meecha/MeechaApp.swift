@@ -8,9 +8,11 @@ import SwiftUI
 
 @main
 struct MeechaApp: App {
-    @State var loginState: Bool = false
+//    @State var loginState: Bool = false
     @State private var isLoading = true
     @State private var hasError = false
+    // App全体でログイン状態を記録
+    @AppStorage("isLoggedState") var isLoggedState: Bool = false
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
@@ -21,10 +23,10 @@ struct MeechaApp: App {
                 } else if hasError {
                     ErrorView() // エラー画面
                 } else {
-                    if loginState {
+                    if isLoggedState {
                         CustomTabView()
                     } else {
-                        LoginView(loginButton: $loginState)
+                        LoginView()
                     }
                 }
 //                MapWrapperView()
@@ -48,13 +50,13 @@ struct MeechaApp: App {
             
             if userInfo.userId == "" {
                 // ログイン失敗にする
-                loginState = false
+                isLoggedState = false
                 return
             }
             
             // トークンを設定
             AuthTokenManager.shared.refreshToken = getKeyChain(key: Config.rfTokenKey)
-            loginState = true
+            isLoggedState = true
         } catch {
             hasError = true
             isLoading = false

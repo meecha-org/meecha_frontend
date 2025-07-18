@@ -142,6 +142,8 @@ struct TapToAddMapView: UIViewRepresentable {
             if annotationView == nil {
                 annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 annotationView?.canShowCallout = false
+                annotationView?.isDraggable = true // ← ここがポイント！
+
 
                 // Render SwiftUI view to image
                 let hostingView = HostingPinView()
