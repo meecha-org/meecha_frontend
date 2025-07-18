@@ -65,7 +65,15 @@ struct SettingListsGroup: View {
             
             // パスワード
             Button(action:{
+                // ログアウトボタンを押した時
+                // キーチェーンから削除する
+                deleteKeyChain(tag: Config.rfTokenKey)
                 
+                // リフレッシュトークンを削除
+                AuthTokenManager.shared.refreshToken = ""
+                
+                // アクセストークンのキャッシュを削除する
+                AuthTokenManager.shared.clearTokenCache()
             }){
                 Text("ログアウト")
                     .zenFont(.medium, size: 14, color: .meechaRed)
