@@ -8,43 +8,36 @@ import SwiftUI
 
 struct SearchComp: View {
     @StateObject private var userSearchDataModel = UserSearchDataModel()
+    @State public var searchText: String;
+    
     var body: some View {
         VStack{
             ForEach(userSearchDataModel.UserSearch){ i in
                 SearchCard(iconUrl: i.ImageURL, name: i.targetName, UserId: i.id)
+            }
+        }.task {
+            // フレンドを検索する
+            let (result,success) = searchFriend(name: searchText)
+            
+            // 成功したかどうか
+            if success {
+                // 成功した場合
+                // 全て削除する
+                userSearchDataModel.UserSearch.removeAll()
                 
+                debugPrint(result)
+                
+                for resultUser in result {
+                    // データを追加する
+                    userSearchDataModel.UserSearch.append(UserSearchData(id: resultUser.userid, targetName: resultUser.name, ImageURL: "https://k8s-meecha.mattuu.com/auth/assets/\(resultUser.userid).png"))
+                }
             }
         }
-//        .task {
-//            do {
-//                // 全てを削除する
-//                requestsModel.requests.removeAll()
-//                
-//                // 送信済みリクエストを取得
-//                let (sentRequests, success) = getSentFriendRequests()
-//                
-//                // 成功したか
-//                if success {
-//                    for request in sentRequests {
-//                        // 追加する
-//                        requestsModel.requests.append(RequestData(name: request.targetName, targetId: request.target, requestId: request.id))
-//                        
-//                        print("ID: \(request.id)")
-//                        print("送信者: \(request.sender)")
-//                        print("対象: \(request.target)")
-//                    }
-//                } else {
-//                    print("取得に失敗しました")
-//                }
-//            } catch {
-//                debugPrint(error)
-//            }
-//        }
         .frame(width: 300)
         .padding(.top, 10)
     }
 }
 #Preview {
-    SearchComp()
+    SearchComp(searchText: "")
 }
 

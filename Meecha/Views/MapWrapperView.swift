@@ -1,5 +1,5 @@
 //
-//  DistanceView.swift
+//  MapWrapperView.swift
 //  Meecha
 //
 //  Created by 2230220 on 2025/07/17.
@@ -15,7 +15,9 @@ struct MapWrapperView: View {
     
     @StateObject private var locationManager = LocationManager() // 現在地の取得
     @State private var annotations: [MKPointAnnotation] = []     // ピンの一覧
-    @State var isPinModeEnabled: Bool = false
+    @State var isPinModeEnabled: Bool = false   // ピンを立てるモード
+    @State var isDraging : Bool = false    // ピンドラッグモード
+
     
     var body: some View {
         ZStack {
@@ -33,7 +35,10 @@ struct MapWrapperView: View {
                     // ピン設置モード切り替えボタン
                     Button(action: {
                         isPinModeEnabled.toggle()
-                        print("\(isPinModeEnabled)")
+                        isDraging.toggle()
+                        print("ピン設置モード\(isPinModeEnabled)")
+                        print("ピンドラッグモード\(isDraging)")
+
                     }) {
                         ZStack{
                             Circle()

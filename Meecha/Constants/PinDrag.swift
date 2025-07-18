@@ -17,7 +17,7 @@ struct PinPoint: Identifiable {
 }
 
 struct ContentView: View {
-    @State var isDraging = false
+    @State var isDraging = false    // ピンドラッグモード
     @State var modes = MapInteractionModes.all
     @State var dragId = UUID()
     @State var pinList = [PinPoint]()

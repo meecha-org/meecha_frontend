@@ -12,7 +12,13 @@ struct CustomTabView: View {
     let tabIcons = ["Users","MapPin", "UserCircle"] //アイコン
     let tabIconFill = ["UsersFill","MapPinFill","UserCircleFill"]
     
+    // App全体でログイン状態を記録
+    @AppStorage("isLoggedState") var isLoggedState: Bool = false
+
     var body: some View {
+        if !isLoggedState {
+            LoginView()
+        }
         ZStack {
             Color.bg.ignoresSafeArea()
             // 表示する画面

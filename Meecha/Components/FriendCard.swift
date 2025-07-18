@@ -11,8 +11,16 @@ struct FriendCard: View {
     @State var iconImage: String    // アイコン
     @State var name: String         // 名前
     
-    @State var isSetting: Bool = false
     @State var NoButton: Bool = false
+    
+    // リクエストID
+    public var requestID: String
+    
+    // ユーザーID
+    public var userID: String
+    
+    // フレンド削除ボタンか
+    public var isDelete: Bool = false
 
     var body: some View {
         ZStack{
@@ -33,7 +41,7 @@ struct FriendCard: View {
                         .resizable()
                         .frame(width: 55, height: 55)
                         .cornerRadius(50)
-                    // 角丸ボーダー
+                        // 角丸ボーダー
                         .overlay(
                             RoundedRectangle(cornerRadius: 50)
                                 .stroke(Color.formBorder, lineWidth: 1.5)
@@ -64,43 +72,19 @@ struct FriendCard: View {
             .frame(width: 250)
             HStack{
                 Spacer()
-                NoButtonStyle(NoButton: $NoButton, RequestId: "")
+                NoButtonStyle(NoButton: $NoButton, userID: userID, isDelete: isDelete, RequestId: requestID)
                     .padding(.top, 30)
             }
             .frame(width: 265)
-            //設定ボタン
-            HStack{
-                Spacer()
-                Button(action:{
-                    isSetting = true
-                }){
-                    FriendSettingButton()
-                }
-                .buttonStyle(.plain)
-            }
-            .padding(.bottom, 35)
-            .frame(width: 260)
-
-            if isSetting {
-                HStack {
-                    Spacer()
-                    FriendSettingFrame()
-                }
-                .padding(.bottom, 50)
-                .frame(width: 330)
-            }
         }   // ZStack
         .frame(height: 90)
-        .onTapGesture {
-            isSetting = false
-        }
     }   // body
 }   // View
 
 #Preview {
     VStack{
-        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
-        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+//        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+//        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
     }
 }
 

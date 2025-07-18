@@ -11,8 +11,6 @@ import SwiftUI
 struct ApprovalCard: View {
     @State var iconUrl: String
     @State var name: String
-    
-    @State var isSetting: Bool = false
     // リクエストID
     public var requestId: String
     
@@ -64,30 +62,8 @@ struct ApprovalCard: View {
             }   // HStack
             .frame(width: 250)
            
-            //設定ボタン
-            HStack{
-                Spacer()
-                Button(action:{
-                    isSetting = true
-                }){
-                    FriendSettingButton()
-                }
-            }
-            .padding(.bottom, 35)
-            .frame(width: 260)
-            if isSetting {
-                HStack {
-                    Spacer()
-                    FriendSettingFrame()
-                }
-                .padding(.bottom, 50)
-                .frame(width: 330)
-            }
         }   // ZStack
         .frame(height: 90)
-        .onTapGesture {
-            isSetting = false
-        }
     }   // body
 }   // View
 

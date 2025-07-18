@@ -54,7 +54,7 @@ struct RequestCard: View {
                     }
                     .frame(width: 130, alignment: .leading)
                     
-                    NoButtonStyle(NoButton: $NoButton,RequestId: requestID)
+                    NoButtonStyle(NoButton: $NoButton, userID: "", RequestId: requestID)
                         .padding(.leading, 110)
                         .padding(.top, 30)
                 }   // ZStack
@@ -62,18 +62,6 @@ struct RequestCard: View {
                 Spacer()
             }   // HStack
             .frame(width: 250)
-            
-            //設定ボタン
-            HStack{
-                Spacer()
-                Button(action:{
-                    
-                }){
-                    FriendSettingButton()
-                }
-            }
-            .padding(.bottom, 35)
-            .frame(width: 260)
         }   // ZStack
     }   // body
 }   // View
