@@ -41,6 +41,7 @@ struct DistanceDialog: View {
                 .pickerStyle(.menu)
                 
 
+                // 決定・戻るボタン
                 HStack{
                     // 戻るボタン
                     Button(action: {

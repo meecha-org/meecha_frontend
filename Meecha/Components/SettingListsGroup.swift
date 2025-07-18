@@ -8,8 +8,10 @@ import SwiftUI
 
 struct SettingListsGroup: View {
     @State var notice: Bool = false
-    @Binding var isDistance: Bool
-    @Binding var isDialog: Bool
+    @Binding var isDistance: Bool   // プライベート範囲画面
+    @Binding var isDialog: Bool     // 通知する距離ダイアログ
+    // App全体でログイン状態を記録
+    @AppStorage("isLoggedState") var isLoggedState: Bool = false
     var body: some View {
         VStack(spacing: 20){
             // プライベート範囲
@@ -67,21 +69,16 @@ struct SettingListsGroup: View {
             // パスワード
             Button(action:{
                 // ログアウトボタンを押した時
-                // キーチェーンから削除する
-                deleteKeyChain(tag: Config.rfTokenKey)
-                
-                // リフレッシュトークンを削除
-                AuthTokenManager.shared.refreshToken = ""
-                
-                // アクセストークンのキャッシュを削除する
-                AuthTokenManager.shared.clearTokenCache()
+                isLoggedState = false     // ログイン画面へ
+                deleteKeyChain(tag: Config.rfTokenKey)      // キーチェーンから削除する
+                AuthTokenManager.shared.refreshToken = ""   // リフレッシュトークンを削除
+                AuthTokenManager.shared.clearTokenCache()   // アクセストークンのキャッシュを削除する
             }){
                 Text("ログアウト")
                     .zenFont(.medium, size: 14, color: .meechaRed)
             }
             .frame(width: 270, alignment: .leading)
             .buttonStyle(.plain)
-            
         }
-    }
-}
+    }   // body
+}   // View
