@@ -73,18 +73,6 @@ struct SearchCard: View {
             .padding(.top, 30)
             .frame(width: 260)
             
-            //設定ボタン
-            HStack{
-                Spacer()
-                Button(action:{
-                    isSetting = true
-                }){
-                    FriendSettingButton()
-                }
-            }
-            .padding(.bottom, 35)
-            .frame(width: 260)
-            
         }   // ZStack
         .frame(width: 330 , height: 90)
     }   // body
