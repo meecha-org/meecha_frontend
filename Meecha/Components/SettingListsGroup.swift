@@ -9,6 +9,7 @@ import SwiftUI
 struct SettingListsGroup: View {
     @State var notice: Bool = false
     @Binding var isDistance: Bool
+    @Binding var isDialog: Bool
     var body: some View {
         VStack(spacing: 20){
             // プライベート範囲
@@ -21,7 +22,7 @@ struct SettingListsGroup: View {
             .buttonStyle(.plain)
             // 通知する距離
             Button(action:{
-                
+                isDialog = true
             }){
                 SettingList(ListText: "通知する距離（半径）")
             }

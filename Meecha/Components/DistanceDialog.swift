@@ -7,10 +7,18 @@
 import SwiftUI
 
 struct DistanceDialog: View {
-    @State var selection = 50   // 選択された値
+    @State var selection = 0   // 選択された値
     var distance = [50, 200, 500, 1000, 3000, 5000]  // 距離の配列
+    @State var selectDistance: Int
+    @State var isDialog: Bool = false
     var body: some View {
         ZStack{
+            // 背景タップ領域
+               Color.clear
+                   .contentShape(Rectangle())
+                   .onTapGesture {
+                       isDialog = false
+                   }
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
                 .frame(width: 250, height: 200)
@@ -50,6 +58,8 @@ struct DistanceDialog: View {
                     // 決定ボタン
                     Button(action: {
                         print("決定")
+                        selectDistance = distance[selection]
+                        print("\(selectDistance)")
                     }) {
                         ZStack{
                             RoundedRectangle(cornerRadius: 5)
@@ -70,5 +80,5 @@ struct DistanceDialog: View {
 }
 
 #Preview {
-    DistanceDialog()
+    DistanceDialog(selectDistance: 50)
 }

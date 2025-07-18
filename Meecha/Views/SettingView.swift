@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SettingView: View {
     @State var isDistance: Bool = false
-    
+    @State var isDialog: Bool = false
+
     @State var UserName: String = ""
     @State var UserID: String = ""
     
@@ -35,14 +36,13 @@ struct SettingView: View {
                                 .stroke(Color.main, lineWidth: 1)
                         )
                     
-                    SettingListsGroup(isDistance: $isDistance)
+                    SettingListsGroup(isDistance: $isDistance, isDialog: $isDialog )
                 }
                 Spacer()
             }.task {
                 do {
                     // 自身の情報取得
                     let response = try await FetchInfo()
-                    
                     debugPrint("userInfo: \(response)")
                     
                     // 情報を設定
