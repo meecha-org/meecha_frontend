@@ -45,6 +45,7 @@ struct FriendSearchSheet: View {
                 // 検索ボタン
                 Button(action:{
                     print("\(isSearchText)")
+                    searchText = isSearchText
                     isSearchButton = true
                 }){
                     ZStack{

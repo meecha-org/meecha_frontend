@@ -32,6 +32,12 @@ struct  YesButtonStyle: View {
 struct NoButtonStyle : View {
     @Binding var NoButton: Bool
     
+    // ユーザーID
+    public var userID: String
+    
+    // フレンド削除ボタンか
+    public var isDelete: Bool = false
+    
     // リクエストID
     public var RequestId: String
     
@@ -42,8 +48,15 @@ struct NoButtonStyle : View {
             
             debugPrint("リクエストをキャンセルします:\(RequestId)")
             
-            // リクエストをキャンセルする
-            cancelFriend(requestId: RequestId)
+            if !isDelete {
+                // キャンセルの時
+                // リクエストをキャンセルする
+                cancelFriend(requestId: RequestId)
+                return
+            }
+            
+            // 削除する
+            removeFriend(userid: userID)
         }){
             ZStack {
                 Circle()
