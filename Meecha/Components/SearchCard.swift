@@ -65,6 +65,7 @@ struct SearchCard: View {
                 Spacer()
                 Button(action:{
                     print("\(UserId)")
+                    sendFriendRequest(userid: UserId)
                     ReqestButton = true
                 }){
                         RequestButton()

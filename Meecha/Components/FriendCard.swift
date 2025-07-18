@@ -13,6 +13,15 @@ struct FriendCard: View {
     
     @State var isSetting: Bool = false
     @State var NoButton: Bool = false
+    
+    // リクエストID
+    public var requestID: String
+    
+    // ユーザーID
+    public var userID: String
+    
+    // フレンド削除ボタンか
+    public var isDelete: Bool = false
 
     var body: some View {
         ZStack{
@@ -64,7 +73,7 @@ struct FriendCard: View {
             .frame(width: 250)
             HStack{
                 Spacer()
-                NoButtonStyle(NoButton: $NoButton, RequestId: "")
+                NoButtonStyle(NoButton: $NoButton, userID: userID, isDelete: isDelete, RequestId: requestID)
                     .padding(.top, 30)
             }
             .frame(width: 265)
@@ -99,8 +108,8 @@ struct FriendCard: View {
 
 #Preview {
     VStack{
-        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
-        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+//        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
+//        FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/c87bb9f9-c224-4e88-9adb-849614275189.png", name: "かれんこん")
     }
 }
 

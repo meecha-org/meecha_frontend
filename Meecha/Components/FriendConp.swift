@@ -17,7 +17,8 @@ struct FriendConp: View {
 //                FriendCard(iconImage: i.iconImage, name: i.name)
 //            }
             ForEach(users){ i in
-                FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/\(i.id).png", name: i.name)
+                FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/\(i.id).png", name: i.name, requestID: "",userID: i.id,isDelete: true)
+//                FriendCard(iconImage: "https://k8s-meecha.mattuu.com/auth/assets/\(i.id).png", name: i.name)
             }
         }
         .frame(width: 300)
