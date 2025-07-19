@@ -21,6 +21,7 @@ struct MapWrapperView: View {
     @State private var showDeleteAlert = false
     @Binding var isDistance: Bool               // プライベート範囲画面
     @State var PlusBtton : Bool = true          // プラスボタン
+    @State var isNextBackButton: Bool = false   // ピン追加中のボタン
     @State var isPinModeEnabled: Bool = false   // ピンを立てるモード
     @State var isDraging : Bool = false         // ピンドラッグモード
     @State var isDialog: Bool = false           // 範囲選択ダイアログ
@@ -31,7 +32,7 @@ struct MapWrapperView: View {
         ZStack {
             // 現在地が取得できたらマップを表示、それまでは読み込み中表示
             if let userLocation = locationManager.userLocation {
-                TapToAddMapView(annotations: $annotations, selectedAnnotation: $selectedAnnotation,showDeleteAlert: $showDeleteAlert,  userLocation: userLocation, isPinModeEnabled: isPinModeEnabled)
+                TapToAddMapView(annotations: $annotations, selectedAnnotation: $selectedAnnotation,showDeleteAlert: $showDeleteAlert,  userLocation: userLocation, isPinModeEnabled: $isPinModeEnabled, isDraging: $isDraging )
                     .edgesIgnoringSafeArea(.all) // マップを画面全体に表示
             } else {
                 ProgressView("現在地を取得中…") // ローディング表示
@@ -44,8 +45,8 @@ struct MapWrapperView: View {
                         Spacer()
                         // ピン設置モード切り替えボタン
                         Button(action: {
-                            isDialog = true
-                            PlusBtton = false
+                            isDialog = true     // ダイアログ表示
+                            PlusBtton = false   // プラスボタン非表示
                         }) {
                             ZStack{
                                 Circle()
@@ -78,7 +79,7 @@ struct MapWrapperView: View {
             }
             VStack{
                 Spacer()
-                if isPinModeEnabled{
+                if isNextBackButton{
                     // 決定・戻るボタン
                     HStack{
                         // 戻るボタン
@@ -86,6 +87,8 @@ struct MapWrapperView: View {
                             isPinModeEnabled = false
                             isDraging = false
                             PlusBtton = true
+                            isNextBackButton = false
+
                             if let annotation = temporaryAnnotation {
                                 fixedAnnotations.append(annotation)
                                 temporaryAnnotation = nil
@@ -99,6 +102,7 @@ struct MapWrapperView: View {
                             isPinModeEnabled = false
                             isDraging = false
                             PlusBtton = true
+                            isNextBackButton = false
                         }) {
                             NextButton()
                         }
@@ -116,7 +120,7 @@ struct MapWrapperView: View {
                 }   // else if
             }
             if isDialog{
-                PrivateDailog(isDialog: $isDialog, isDraging: $isDraging, isPinModeEnabled: $isPinModeEnabled)
+                PrivateDailog(isDialog: $isDialog, isDraging: $isDraging, isPinModeEnabled: $isPinModeEnabled,isNextBackButton: $isNextBackButton, PlusBtton: $PlusBtton)
             }
         }   // ZStack
         .edgesIgnoringSafeArea(.all)

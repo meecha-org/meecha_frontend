@@ -15,6 +15,9 @@ struct PrivateDailog: View {
     @Binding var isDialog: Bool             // 範囲選択ダイアログ
     @Binding var isDraging : Bool           // ピンドラッグモード
     @Binding var isPinModeEnabled: Bool     // ピンを立てるモード
+    @Binding var isNextBackButton: Bool     // ピン追加中のボタン
+
+    @Binding var PlusBtton: Bool
     var body: some View {
         ZStack{
             // 背景タップ領域
@@ -22,6 +25,8 @@ struct PrivateDailog: View {
                    .contentShape(Rectangle())
                    .onTapGesture {
                        isDialog = false
+                       PlusBtton = true
+                       isNextBackButton = true
                    }
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
@@ -61,7 +66,7 @@ struct PrivateDailog: View {
                         distanceSize = selectDistance
                         print("\(selectDistance)")
                         isDialog = false            // ダイアログ閉じる
-                        
+                        isNextBackButton = true
                         isPinModeEnabled.toggle()   //ピン設置モード
                         isDraging.toggle()          //ピンドラッグモード
                         print("ピン設置モード\(isPinModeEnabled)")

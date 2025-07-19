@@ -25,7 +25,7 @@ struct SwiftUIPinView: View {
                 )
             Image(.lockKey)
                 .resizable()
-                .frame(width: 30, height: 30)
+                .frame(width: 25, height: 25)
         }
     }
 }
@@ -44,7 +44,7 @@ class HostingPinView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    // 当たり判定を拡大
+     // 当たり判定を拡大
         override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
             let hitFrame = self.bounds.insetBy(dx: -30, dy: -30)
             return hitFrame.contains(point)
@@ -78,10 +78,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 // MARK: - SwiftUI → UIKitへのラッパー：MKMapViewを表示
 struct TapToAddMapView: UIViewRepresentable {
     @Binding var annotations: [MKPointAnnotation] // ピンの状態（SwiftUIと同期
+    
     @Binding var selectedAnnotation: MKPointAnnotation?
     @Binding var showDeleteAlert: Bool
     var userLocation: CLLocationCoordinate2D?     // 初期表示に使う座標
-    var isPinModeEnabled: Bool
+    @Binding var isPinModeEnabled: Bool // 設置モード
+    @Binding var isDraging: Bool    // ドラッグモード
 
     // UIView（MKMapView）を生成
     func makeUIView(context: Context) -> MKMapView {
@@ -122,14 +124,19 @@ struct TapToAddMapView: UIViewRepresentable {
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: TapToAddMapView
         var isPinModeEnabled: Bool = false
+        var isDraging: Bool = false
 
         init(_ parent: TapToAddMapView) {
             self.parent = parent
         }
 
+        // タップでピン設置
         @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
             guard self.isPinModeEnabled else { return } // ← ここ
             guard let mapView = gestureRecognizer.view as? MKMapView else { return }
+            
+            // ピンが既に1つある場合は追加しない
+                       guard parent.annotations.count == 0 else { return }
             
             // タップされた場所(ビュー内の座標)を取得
             let point = gestureRecognizer.location(in: mapView)
@@ -141,6 +148,9 @@ struct TapToAddMapView: UIViewRepresentable {
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             parent.annotations.append(annotation)
+            
+            // ピン設置後に設置モードを解除
+            parent.isPinModeEnabled = false
         }
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
@@ -160,7 +170,7 @@ struct TapToAddMapView: UIViewRepresentable {
                 let img = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 annotationView?.image = img
-                annotationView?.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+                annotationView?.frame = CGRect(x: 0, y: 0, width: 500, height: 500)
             } else {
                 annotationView?.annotation = annotation
             }
@@ -168,7 +178,7 @@ struct TapToAddMapView: UIViewRepresentable {
         }
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             // ピン設置モード中（ドラッグモード）のときは削除不可
-            guard !isPinModeEnabled else { return }
+            guard isPinModeEnabled || isDraging else { return }
             if let annotation = view.annotation as? MKPointAnnotation {
                 parent.selectedAnnotation = annotation
                 parent.showDeleteAlert = true
