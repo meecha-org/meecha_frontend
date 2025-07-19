@@ -14,7 +14,7 @@ struct MapWrapperView: View {
     let headerBg = LinearGradient(gradient: Gradient(colors: [.bg, .clear]), startPoint: .center, endPoint: .bottom)    //ヘッダー背景
     
     @StateObject private var locationManager = LocationManager() // 現在地の取得
-    @State private var pins: [Pin] = []
+    @StateObject private var pins = PrivatePinModel()
     @State private var selectedPin: Pin? = nil
     @State private var showDeleteAlert = false
     @Binding var isDistance: Bool               // プライベート範囲画面
@@ -24,28 +24,12 @@ struct MapWrapperView: View {
     @State var isDraging : Bool = false         // ピンドラッグモード
     @State var isDialog: Bool = false           // 範囲選択ダイアログ
     
-    // MARK: - ピン情報をログ出力する関数
-        private func logPinInformation() {
-            print("=== ピン情報ログ出力 ===")
-            
-            if pins.isEmpty {
-                print("設置されているピンはありません")
-            } else {
-                for (index, annotation) in pins.enumerated() {
-                    let coordinate = annotation.coordinate
-                    print("ピン \(index + 1):")
-                    print("  座標: (\(coordinate.latitude), \(coordinate.longitude))")
-                    print("  サイズ: (\(pins[index].size))")
-                }
-            }
-            print("=== ログ出力終了 ===")
-        }
     
     var body: some View {
         ZStack {
             // 現在地が取得できたらマップを表示、それまでは読み込み中表示
             if let userLocation = locationManager.userLocation {
-                TapToAddMapView(pins: $pins,
+                TapToAddMapView(pins: $pins.pins,
                                 selectedPin: $selectedPin,
                                 showDeleteAlert: $showDeleteAlert,
                                 userLocation: locationManager.userLocation,
@@ -103,7 +87,6 @@ struct MapWrapperView: View {
                         // 戻るボタン
                         Button(action: {
                             print("🔙 戻るボタンが押されました")
-                            logPinInformation() //ピン情報をログ出力
                             isPinModeEnabled = false
                             isDraging = false
                             PlusBtton = true
@@ -116,7 +99,11 @@ struct MapWrapperView: View {
                         // 決定ボタン
                         Button(action: {
                             print("✅ 決定ボタンが押されました")
-                            logPinInformation() // ピン情報をログ出力
+                            // ピンの情報を表示
+                            for pin in pins.pins {
+                                print("ピンID: \(pin.id)")
+                                print("　座標: 緯度 \(pin.coordinate.latitude), 経度 \(pin.coordinate.longitude)")
+                            }
                             isPinModeEnabled = false
                             isDraging = false
                             PlusBtton = true
@@ -148,7 +135,7 @@ struct MapWrapperView: View {
                 message: Text("このピンを削除してもよろしいですか？"),
                 primaryButton: .destructive(Text("削除")) {
                     if let selected = selectedPin {
-                        pins.removeAll { $0.id == selected.id }
+                        pins.pins.removeAll { $0.id == selected.id }
                         selectedPin = nil
                     }
                 },

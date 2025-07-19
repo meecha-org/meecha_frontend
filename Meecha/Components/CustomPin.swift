@@ -9,11 +9,6 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-struct Pin: Identifiable {
-    let id = UUID()
-    var coordinate: CLLocationCoordinate2D
-    var size: Int
-}
 
 struct SwiftUIPinView: View {
     @State var distanceSize: Int
