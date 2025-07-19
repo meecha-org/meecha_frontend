@@ -26,11 +26,11 @@ struct PrivateDailog: View {
                    .onTapGesture {
                        isDialog = false
                        PlusBtton = true
-                       isNextBackButton = true
+                       isNextBackButton = false
                    }
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
-                .frame(width: 250, height: 200)
+                .frame(width: 250, height: 380)
             // 角丸ボーダー
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -47,14 +47,20 @@ struct PrivateDailog: View {
                             .zenFont(.medium, size: 12, color: .font)
                     }
                 }
-                .pickerStyle(.menu)                
+                .pickerStyle(.wheel)
 
                 // 決定・戻るボタン
                 HStack{
                     // 戻るボタン
                     Button(action: {
                         print("戻る")
-                        isDialog = false    // ダイアログ閉じる
+                        isDialog = false
+                        PlusBtton = true
+                        isNextBackButton = false
+                        isPinModeEnabled = false   //ピン設置モード
+                        isDraging = false          //ピンドラッグモード
+                        print("ピン設置モード\(isPinModeEnabled)")
+                        print("ピンドラッグモード\(isDraging)")
                     }) {
                        BackButton()
                     }
@@ -67,8 +73,8 @@ struct PrivateDailog: View {
                         print("\(selectDistance)")
                         isDialog = false            // ダイアログ閉じる
                         isNextBackButton = true
-                        isPinModeEnabled.toggle()   //ピン設置モード
-                        isDraging.toggle()          //ピンドラッグモード
+                        isPinModeEnabled = true   //ピン設置モード
+                        isDraging = true          //ピンドラッグモード
                         print("ピン設置モード\(isPinModeEnabled)")
                         print("ピンドラッグモード\(isDraging)")
                         
@@ -90,7 +96,7 @@ struct PrivateDailog: View {
                 .frame(width: 200)
                 .padding(.bottom, 24)
             }
-            .frame(width: 250, height: 200)
+            .frame(width: 250)
         }
         .edgesIgnoringSafeArea(.all)
     }   // body

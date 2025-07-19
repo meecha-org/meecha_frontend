@@ -9,8 +9,10 @@ import SwiftUI
 struct DistanceDialog: View {
     @State var selection = 0   // 選択された値
     var distance = [50, 200, 500, 1000, 3000, 5000]  // 距離の配列
-    @State var selectDistance: Int = 50
+    
+    @Binding var selectDistance: Int
     @Binding var isDialog: Bool
+    
     var body: some View {
         ZStack{
             // 背景タップ領域
@@ -21,7 +23,7 @@ struct DistanceDialog: View {
                    }
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
-                .frame(width: 250, height: 200)
+                .frame(width: 250, height: 380)
             // 角丸ボーダー
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -37,8 +39,10 @@ struct DistanceDialog: View {
                         Text("\(self.distance[num])")          // .tag()の指定は不要
                             .zenFont(.medium, size: 12, color: .font)
                     }
+                }.task {
+                    selection = distance.firstIndex(of: selectDistance) ?? 0
                 }
-                .pickerStyle(.menu)
+                .pickerStyle(.wheel)
                 
 
                 // 決定・戻るボタン
@@ -62,7 +66,15 @@ struct DistanceDialog: View {
                         print("決定")
                         selectDistance = distance[selection]
                         print("\(selectDistance)")
-                        isDialog = false
+                        
+                        // 情報を更新する
+                        let response = updateNotifyDistance(distance: selectDistance)
+                        
+                        if response {
+                            // 成功した時
+                            // 閉じる
+                            isDialog = false
+                        }
                     }) {
                         ZStack{
                             RoundedRectangle(cornerRadius: 5)
@@ -76,7 +88,7 @@ struct DistanceDialog: View {
                 .frame(width: 200)
                 .padding(.bottom, 24)
             }
-            .frame(width: 250, height: 200)
+            .frame(width: 250)
         }
         .edgesIgnoringSafeArea(.all)
     }   // body

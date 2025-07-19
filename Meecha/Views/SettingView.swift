@@ -11,8 +11,11 @@ struct SettingView: View {
     @State var isDistance: Bool = false     //プライベート範囲画面
     @State var isDialog: Bool = false
 
-    @State var UserName: String
-    @State var UserID: String
+    public var UserName: String
+    public var UserID: String
+        
+    // 通知距離を保持する変数
+    @State var nowDistance: Int = 1000
     
     var body: some View {
         if isDistance{ MapWrapperView(isDistance: $isDistance) }
@@ -42,7 +45,20 @@ struct SettingView: View {
                     Spacer()
                 }   // VStack
                 if isDialog {
-                    DistanceDialog(isDialog: $isDialog)
+                    DistanceDialog(selectDistance: $nowDistance, isDialog: $isDialog)
+                }
+            }.task {
+                do {
+                    // 現在の通離距離を取得する
+                    let (distance,success) = getNotifyDistance()
+                    
+                    if success {
+                        debugPrint("nowDistance: \(distance.distance)")
+                        // 成功した時
+                        nowDistance = distance.distance
+                    }
+                } catch {
+                    debugPrint(error)
                 }
             }
         }   // else

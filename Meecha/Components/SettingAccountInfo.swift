@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingAccountInfo: View {
+//    @State var Myicon: ImageResource
     @State var MyName: String = ""
     @State var MyID: String = ""
     // コピーテキスト
@@ -19,6 +20,7 @@ struct SettingAccountInfo: View {
         HStack(spacing: 16){
             // アイコン
             AsyncImage(url: URL(string: "https://k8s-meecha.mattuu.com/auth/assets/\(MyID).png")) {response in
+                // アイコン
                 response.image?
                     .resizable()
                     .frame(width: 120, height: 120)
@@ -49,5 +51,5 @@ struct SettingAccountInfo: View {
 }
 
 #Preview {
-    SettingAccountInfo(MyName: "りんご", MyID: "1234567890")
+    SettingAccountInfo(MyName: "りんご", MyID:"c87bb9f9-c224-4e88-9adb-849614275189")
 }

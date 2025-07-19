@@ -12,7 +12,6 @@ import CoreLocation
 struct SwiftUIPinView: View {
     @AppStorage("distanceSize") var distanceSize: Int = 50
     var body: some View {
-
         ZStack {
             Circle()
                 .fill(Color.white)
@@ -44,11 +43,12 @@ class HostingPinView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-     // 当たり判定を拡大
-        override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-            let hitFrame = self.bounds.insetBy(dx: -30, dy: -30)
-            return hitFrame.contains(point)
-        }
+    
+    // 当たり判定を拡大
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        let hitFrame = self.bounds.insetBy(dx: -30, dy: -30)
+        return hitFrame.contains(point)
+    }
 }
 
 // MARK: - 現在地取得用の LocationManager クラス
@@ -78,7 +78,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 // MARK: - SwiftUI → UIKitへのラッパー：MKMapViewを表示
 struct TapToAddMapView: UIViewRepresentable {
     @Binding var annotations: [MKPointAnnotation] // ピンの状態（SwiftUIと同期
-    
     @Binding var selectedAnnotation: MKPointAnnotation?
     @Binding var showDeleteAlert: Bool
     var userLocation: CLLocationCoordinate2D?     // 初期表示に使う座標
@@ -114,7 +113,9 @@ struct TapToAddMapView: UIViewRepresentable {
         uiView.removeAnnotations(uiView.annotations)
         uiView.addAnnotations(annotations)
         context.coordinator.isPinModeEnabled = isPinModeEnabled
+        context.coordinator.isDraging = isDraging // 追加：ドラッグモードの状態を同期
     }
+    
     // ジェスチャー処理・デリゲートのためのCoordinatorを作成
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -132,17 +133,17 @@ struct TapToAddMapView: UIViewRepresentable {
 
         // タップでピン設置
         @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-            guard self.isPinModeEnabled else { return } // ← ここ
+            guard self.isPinModeEnabled else { return }
             guard let mapView = gestureRecognizer.view as? MKMapView else { return }
             
             // ピンが既に1つある場合は追加しない
-                       guard parent.annotations.count == 0 else { return }
+            guard parent.annotations.count == 0 else { return }
             
             // タップされた場所(ビュー内の座標)を取得
             let point = gestureRecognizer.location(in: mapView)
             // 地図上の緯度・経度に変換
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-            print("\(coordinate)")
+            print("新しいピン座標: \(coordinate)")
             
             // ピンを作成して追加
             let annotation = MKPointAnnotation()
@@ -152,8 +153,8 @@ struct TapToAddMapView: UIViewRepresentable {
             // ピン設置後に設置モードを解除
             parent.isPinModeEnabled = false
         }
+        
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-
             let identifier = "SwiftUIPin"
 
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -162,8 +163,7 @@ struct TapToAddMapView: UIViewRepresentable {
                 annotationView?.canShowCallout = false
                 annotationView?.isDraggable = true      // ピンドラッグ
 
-
-                // Render SwiftUI view to image
+                // SwiftUI view を画像として描画
                 let hostingView = HostingPinView()
                 UIGraphicsBeginImageContextWithOptions(hostingView.bounds.size, false, 0)
                 hostingView.drawHierarchy(in: hostingView.bounds, afterScreenUpdates: true)
@@ -176,12 +176,38 @@ struct TapToAddMapView: UIViewRepresentable {
             }
             return annotationView
         }
+        
+        // ピン選択時の処理（削除のために）
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            // ピン設置モード中（ドラッグモード）のときは削除不可
-            guard isPinModeEnabled || isDraging else { return }
+            print("ピンが選択されました")
+            print("設置モード: \(isPinModeEnabled), ドラッグモード: \(isDraging)")
+            
+            // 設置モード・ドラッグモード中は削除不可
+            guard !isPinModeEnabled && !isDraging else {
+                print("モード中のため削除処理をスキップ")
+                return
+            }
+            
             if let annotation = view.annotation as? MKPointAnnotation {
+                print("削除確認ダイアログを表示")
                 parent.selectedAnnotation = annotation
                 parent.showDeleteAlert = true
+            }
+        }
+        
+        // ピンドラッグ開始時
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
+            switch newState {
+            case .starting:
+                print("ドラッグ開始\(parent.isDraging)")
+                parent.isDraging = true
+            case .ending:
+                print("ドラッグ終了\(parent.isDraging)")
+            case .canceling:
+                print("ドラッグモード終了\(parent.isDraging)")
+                parent.isDraging = false
+            default:
+                break
             }
         }
     }

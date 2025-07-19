@@ -89,6 +89,19 @@ struct CustomTabView: View {
                     .padding(.bottom, 50)
                 }
             }
+        }.task {
+            do {
+                // 自身の情報取得
+                let response = try await FetchInfo()
+
+                debugPrint("name:\(response.name) userId:\(response.userId) ")
+                
+                // 情報を設定
+                UserName = response.name
+                UserID = response.userId
+            } catch {
+                debugPrint(error)
+            }
         }   // VStack
         .edgesIgnoringSafeArea(.all)
     }   //body
