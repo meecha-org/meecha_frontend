@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "meecha-icon_waifu2x_noise0_scale4x_waifu2x_noise0_scale2x (1) (1).png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -12,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "meecha-icon_waifu2x_noise0_scale4x_waifu2x_noise0_scale2x (1) (1) 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -23,6 +25,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "meecha-icon_waifu2x_noise0_scale4x_waifu2x_noise0_scale2x (1) (1) 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
