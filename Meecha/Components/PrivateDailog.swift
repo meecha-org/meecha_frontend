@@ -10,7 +10,8 @@ struct PrivateDailog: View {
     @State var selection = 0   // 選択された値
     var distance = [50, 200, 500, 1000, 3000, 5000]  // 距離の配列
     @State var selectDistance: Int = 50
-    
+    @AppStorage("distanceSize") var distanceSize: Int = 50
+
     @Binding var isDialog: Bool             // 範囲選択ダイアログ
     @Binding var isDraging : Bool           // ピンドラッグモード
     @Binding var isPinModeEnabled: Bool     // ピンを立てるモード
@@ -57,6 +58,7 @@ struct PrivateDailog: View {
                     Button(action: {
                         print("決定")
                         selectDistance = distance[selection]
+                        distanceSize = selectDistance
                         print("\(selectDistance)")
                         isDialog = false            // ダイアログ閉じる
                         
@@ -64,6 +66,18 @@ struct PrivateDailog: View {
                         isDraging.toggle()          //ピンドラッグモード
                         print("ピン設置モード\(isPinModeEnabled)")
                         print("ピンドラッグモード\(isDraging)")
+                        
+                        switch selectDistance {
+                        case 50:      distanceSize = 20
+                        case 200:     distanceSize = 50
+                        case 500:     distanceSize = 100
+                        case 1000:    distanceSize = 150
+                        case 3000:    distanceSize = 250
+                        case 5000:    distanceSize = 300
+                        default :
+                            distanceSize = 20
+                        }
+
                     }) {
                         NextButton()
                     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    @State var isDistance: Bool = true     //プライベート範囲画面
+    @State var isDistance: Bool = false     //プライベート範囲画面
     @State var isDialog: Bool = false
 
     @State var UserName: String = ""

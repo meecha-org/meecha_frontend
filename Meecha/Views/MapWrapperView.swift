@@ -17,18 +17,21 @@ struct MapWrapperView: View {
     @State private var annotations: [MKPointAnnotation] = []     // ピンの一覧
     @State private var temporaryAnnotation: MKPointAnnotation? = nil
     @State private var fixedAnnotations: [MKPointAnnotation] = []
+    @State private var selectedAnnotation: MKPointAnnotation? = nil
+    @State private var showDeleteAlert = false
+    @Binding var isDistance: Bool               // プライベート範囲画面
     @State var PlusBtton : Bool = true          // プラスボタン
     @State var isPinModeEnabled: Bool = false   // ピンを立てるモード
     @State var isDraging : Bool = false         // ピンドラッグモード
     @State var isDialog: Bool = false           // 範囲選択ダイアログ
-    @Binding var isDistance: Bool               // プライベート範囲画面
+    
 
     
     var body: some View {
         ZStack {
             // 現在地が取得できたらマップを表示、それまでは読み込み中表示
             if let userLocation = locationManager.userLocation {
-                TapToAddMapView(annotations: $annotations, userLocation: userLocation, isPinModeEnabled: isPinModeEnabled)
+                TapToAddMapView(annotations: $annotations, selectedAnnotation: $selectedAnnotation,showDeleteAlert: $showDeleteAlert,  userLocation: userLocation, isPinModeEnabled: isPinModeEnabled)
                     .edgesIgnoringSafeArea(.all) // マップを画面全体に表示
             } else {
                 ProgressView("現在地を取得中…") // ローディング表示
@@ -63,8 +66,7 @@ struct MapWrapperView: View {
                     }
                     .padding(.bottom, 120)
                 }
-                
-            }
+            }   // ピン追加ボタン
             VStack{
                 Rectangle()
                     .fill(headerBg)
@@ -118,6 +120,21 @@ struct MapWrapperView: View {
             }
         }   // ZStack
         .edgesIgnoringSafeArea(.all)
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(
+                title: Text("ピンを削除しますか？"),
+                message: Text("このピンを削除してもよろしいですか？"),
+                primaryButton: .destructive(Text("削除")) {
+                    if let selected = selectedAnnotation {
+                        annotations.removeAll { $0 == selected }
+                        selectedAnnotation = nil
+                    }
+                },
+                secondaryButton: .cancel {
+                    selectedAnnotation = nil
+                }
+            )
+        }
     }   // body
 }   // View
 

@@ -10,12 +10,14 @@ import MapKit
 import CoreLocation
 
 struct SwiftUIPinView: View {
+    @AppStorage("distanceSize") var distanceSize: Int = 50
     var body: some View {
+
         ZStack {
             Circle()
                 .fill(Color.white)
                 .opacity(0.75)
-                .frame(width: 100, height: 100)
+                .frame(width: CGFloat(distanceSize), height: CGFloat(distanceSize))
                 //角丸ボーダー
                 .overlay(
                     Circle()
@@ -33,7 +35,7 @@ class HostingPinView: UIView {
 
     init() {
         self.hostingController = UIHostingController(rootView: SwiftUIPinView())
-        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        super.init(frame: CGRect(x: 0, y: 0, width: 500, height: 500))
         self.hostingController.view.frame = self.bounds
         self.hostingController.view.backgroundColor = .clear
         self.addSubview(hostingController.view)
@@ -42,6 +44,11 @@ class HostingPinView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // 当たり判定を拡大
+        override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+            let hitFrame = self.bounds.insetBy(dx: -30, dy: -30)
+            return hitFrame.contains(point)
+        }
 }
 
 // MARK: - 現在地取得用の LocationManager クラス
@@ -70,7 +77,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
 // MARK: - SwiftUI → UIKitへのラッパー：MKMapViewを表示
 struct TapToAddMapView: UIViewRepresentable {
-    @Binding var annotations: [MKPointAnnotation] // ピンの状態（SwiftUIと同期）
+    @Binding var annotations: [MKPointAnnotation] // ピンの状態（SwiftUIと同期
+    @Binding var selectedAnnotation: MKPointAnnotation?
+    @Binding var showDeleteAlert: Bool
     var userLocation: CLLocationCoordinate2D?     // 初期表示に使う座標
     var isPinModeEnabled: Bool
 
@@ -151,11 +160,19 @@ struct TapToAddMapView: UIViewRepresentable {
                 let img = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 annotationView?.image = img
+                annotationView?.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
             } else {
                 annotationView?.annotation = annotation
             }
-            
             return annotationView
+        }
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            // ピン設置モード中（ドラッグモード）のときは削除不可
+            guard !isPinModeEnabled else { return }
+            if let annotation = view.annotation as? MKPointAnnotation {
+                parent.selectedAnnotation = annotation
+                parent.showDeleteAlert = true
+            }
         }
     }
 }
