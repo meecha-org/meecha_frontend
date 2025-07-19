@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct SettingListsGroup: View {
-    @State var notice: Bool = false
+    @State var notice: Bool = true
     @Binding var isDistance: Bool   // プライベート範囲画面
     @Binding var isDialog: Bool     // 通知する距離ダイアログ
     // App全体でログイン状態を記録

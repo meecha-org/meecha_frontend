@@ -45,7 +45,6 @@ struct FriendView: View {
                 .padding(.top, 50)
         }
         .edgesIgnoringSafeArea(.all)
-
     }   // body
 }   // View
 

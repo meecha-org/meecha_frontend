@@ -12,7 +12,7 @@ struct FriendSearchSheet: View {
     @State var searchText : String = ""
     
     var body: some View {
-        VStack(alignment: .center, spacing: 32) {
+        VStack(alignment: .center, spacing:24) {
             Text("ユーザー検索")
                 .zenFont(.medium, size: 14, color: .font)
                 .padding(.top, 24)

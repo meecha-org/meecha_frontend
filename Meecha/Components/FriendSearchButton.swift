@@ -23,6 +23,7 @@ struct FriendSearchButton: View {
                 FriendSearchSheet()
             }
             .presentationDetents([.height(500)])
+            
 
         }
         
