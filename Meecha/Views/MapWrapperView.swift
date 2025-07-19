@@ -15,8 +15,6 @@ struct MapWrapperView: View {
     
     @StateObject private var locationManager = LocationManager() // 現在地の取得
     @State private var annotations: [MKPointAnnotation] = []     // ピンの一覧
-    @State private var temporaryAnnotation: MKPointAnnotation? = nil
-    @State private var fixedAnnotations: [MKPointAnnotation] = []
     @State private var selectedAnnotation: MKPointAnnotation? = nil
     @State private var showDeleteAlert = false
     @Binding var isDistance: Bool               // プライベート範囲画面
@@ -89,10 +87,6 @@ struct MapWrapperView: View {
                             PlusBtton = true
                             isNextBackButton = false
 
-                            if let annotation = temporaryAnnotation {
-                                fixedAnnotations.append(annotation)
-                                temporaryAnnotation = nil
-                            }
                         }) {
                             BackButton()
                         }

@@ -57,6 +57,10 @@ struct PrivateDailog: View {
                         isDialog = false
                         PlusBtton = true
                         isNextBackButton = false
+                        isPinModeEnabled = false   //ピン設置モード
+                        isDraging = false          //ピンドラッグモード
+                        print("ピン設置モード\(isPinModeEnabled)")
+                        print("ピンドラッグモード\(isDraging)")
                     }) {
                        BackButton()
                     }
