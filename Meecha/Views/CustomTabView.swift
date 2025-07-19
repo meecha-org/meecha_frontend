@@ -12,6 +12,10 @@ struct CustomTabView: View {
     let tabIcons = ["Users","MapPin", "UserCircle"] //アイコン
     let tabIconFill = ["UsersFill","MapPinFill","UserCircleFill"]
     
+    // ユーザーのプロフィール設定
+    @State private var UserName: String = ""
+    @State private var UserID: String = ""
+    
     // App全体でログイン状態を記録
     @AppStorage("isLoggedState") var isLoggedState: Bool = false
 
@@ -29,9 +33,21 @@ struct CustomTabView: View {
                 case 1:
                     MapView()
                 case 2:
-                    SettingView()
+                    SettingView(UserName: UserName, UserID: UserID)
                 default:
                     MapView()
+                }
+            }.task {
+                do {
+                    // 自身の情報取得
+                    let response = try await FetchInfo()
+                    debugPrint("userInfo: \(response)")
+                    
+                    // 情報を設定
+                    UserName = response.name
+                    UserID = response.userId
+                } catch {
+                    debugPrint(error)
                 }
             }
             
