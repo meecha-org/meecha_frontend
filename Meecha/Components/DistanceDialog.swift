@@ -23,7 +23,7 @@ struct DistanceDialog: View {
                    }
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
-                .frame(width: 250, height: 200)
+                .frame(width: 250, height: 380)
             // 角丸ボーダー
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -42,7 +42,7 @@ struct DistanceDialog: View {
                 }.task {
                     selection = distance.firstIndex(of: selectDistance) ?? 0
                 }
-                .pickerStyle(.menu)
+                .pickerStyle(.wheel)
                 
 
                 // 決定・戻るボタン
@@ -88,7 +88,7 @@ struct DistanceDialog: View {
                 .frame(width: 200)
                 .padding(.bottom, 24)
             }
-            .frame(width: 250, height: 200)
+            .frame(width: 250)
         }
         .edgesIgnoringSafeArea(.all)
     }   // body

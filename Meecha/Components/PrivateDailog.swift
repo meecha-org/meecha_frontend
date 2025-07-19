@@ -30,7 +30,7 @@ struct PrivateDailog: View {
                    }
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
-                .frame(width: 250, height: 200)
+                .frame(width: 250, height: 380)
             // 角丸ボーダー
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -47,7 +47,7 @@ struct PrivateDailog: View {
                             .zenFont(.medium, size: 12, color: .font)
                     }
                 }
-                .pickerStyle(.menu)                
+                .pickerStyle(.wheel)
 
                 // 決定・戻るボタン
                 HStack{
@@ -96,7 +96,7 @@ struct PrivateDailog: View {
                 .frame(width: 200)
                 .padding(.bottom, 24)
             }
-            .frame(width: 250, height: 200)
+            .frame(width: 250)
         }
         .edgesIgnoringSafeArea(.all)
     }   // body
