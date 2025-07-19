@@ -66,5 +66,5 @@ struct SettingView: View {
 }   // View
 
 #Preview {
-    SettingView(UserName: "test", UserID: "test")
+    SettingView(UserName: "hello", UserID: "world")
 }

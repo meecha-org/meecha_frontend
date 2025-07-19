@@ -18,13 +18,14 @@ struct SettingAccountInfo: View {
     
     var body: some View {
         HStack(spacing: 16){
+            // アイコン
             AsyncImage(url: URL(string: "https://k8s-meecha.mattuu.com/auth/assets/\(MyID).png")) {response in
                 // アイコン
                 response.image?
                     .resizable()
                     .frame(width: 120, height: 120)
                     .cornerRadius(75)
-                    // 角丸ボーダー
+                // 角丸ボーダー
                     .overlay(
                         RoundedRectangle(cornerRadius: 75)
                             .stroke(Color.main, lineWidth: 1)
