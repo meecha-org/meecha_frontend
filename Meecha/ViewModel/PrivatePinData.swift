@@ -12,6 +12,7 @@ struct Pin: Identifiable {
     let id = UUID()
     var coordinate: CLLocationCoordinate2D
     var size: Int
+    var selectSize: Int
 }
 
 class PrivatePinModel: ObservableObject {
@@ -26,8 +27,8 @@ class PrivatePinModel: ObservableObject {
     init(){
         //仮データ
         pins = [
-            Pin(coordinate: OsakaStation, size: 50),
-            Pin(coordinate: KIX, size: 150),
+//            Pin(coordinate: OsakaStation, size: 50,selectSize: 300  ),
+//            Pin(coordinate: KIX, size: 150,selectSize: 300),
         ]
     }
 }

@@ -11,6 +11,7 @@ struct PrivateDailog: View {
     var distance = [50, 200, 500, 1000, 3000, 5000]  // 距離の配列
     @State var selectDistance: Int = 50
     @AppStorage("distanceSize") var distanceSize: Int = 50
+    @AppStorage("SelectdistanceSize") var selectDistanceSize: Int = 50
 
     @Binding var isDialog: Bool             // 範囲選択ダイアログ
     @Binding var isDraging : Bool           // ピンドラッグモード
@@ -77,6 +78,8 @@ struct PrivateDailog: View {
                         isDraging = true          //ピンドラッグモード
                         print("ピン設置モード\(isPinModeEnabled)")
                         print("ピンドラッグモード\(isDraging)")
+                        
+                        selectDistanceSize = selectDistance * 1
                         
                         switch selectDistance {
                         case 50:      distanceSize = 20

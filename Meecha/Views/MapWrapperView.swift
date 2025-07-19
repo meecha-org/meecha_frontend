@@ -25,6 +25,28 @@ struct MapWrapperView: View {
     @State var isDialog: Bool = false           // 範囲選択ダイアログ
     
     
+    func PostIgnores() {
+        var addDatas: [NotifyIgnorePoint] = []
+        
+        // ピンの情報を表示
+        for pin in pins.pins {
+            print("ピンID: \(pin.id)")
+            print("　座標: 緯度 \(pin.coordinate.latitude), 経度 \(pin.coordinate.longitude)")
+            print("size: \(pin.selectSize)")
+            addDatas.append(NotifyIgnorePoint(latitude: pin.coordinate.latitude, longitude: pin.coordinate.longitude, size: pin.selectSize))
+        }
+        
+        // データを送信
+        let result = updateNotifyIgnores(ignorePoints: addDatas)
+        
+        // 成功したか
+        if result {
+            debugPrint("更新成功")
+        } else {
+            debugPrint("更新失敗")
+        }
+    }
+    
     var body: some View {
         ZStack {
             // 現在地が取得できたらマップを表示、それまでは読み込み中表示
@@ -103,7 +125,12 @@ struct MapWrapperView: View {
                             for pin in pins.pins {
                                 print("ピンID: \(pin.id)")
                                 print("　座標: 緯度 \(pin.coordinate.latitude), 経度 \(pin.coordinate.longitude)")
+                                print("size: \(pin.selectSize)")
                             }
+                            
+                            // 情報更新
+                            PostIgnores()
+                            
                             isPinModeEnabled = false
                             isDraging = false
                             PlusBtton = true
@@ -117,6 +144,9 @@ struct MapWrapperView: View {
                 }else if PlusBtton{
                     // 戻るボタン
                     Button(action: {
+                        // 情報更新
+                        PostIgnores()
+                        
                         isDistance = false
                     }) {
                         BackButton()
@@ -126,6 +156,23 @@ struct MapWrapperView: View {
             }
             if isDialog{
                 PrivateDailog(isDialog: $isDialog, isDraging: $isDraging, isPinModeEnabled: $isPinModeEnabled,isNextBackButton: $isNextBackButton, PlusBtton: $PlusBtton)
+            }
+        }.task {
+            // 除外ポイントの設定を取得
+            let (response,success) = getNotifyIgnores()
+            
+            debugPrint("ignore point response: \(response)")
+            
+            if success {
+                // 全てを削除する
+                pins.pins.removeAll()
+                
+                // 成功した時
+                for ignorePoint in response {
+                    debugPrint("ignore Pin: \(ignorePoint)")
+                    // 除外ポイントを追加する
+                    pins.pins.append(Pin(coordinate: CLLocationCoordinate2D(latitude: ignorePoint.latitude, longitude: ignorePoint.longitude), size: ignorePoint.size, selectSize: ignorePoint.size))
+                }
             }
         }   // ZStack
         .edgesIgnoringSafeArea(.all)

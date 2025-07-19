@@ -155,8 +155,9 @@ struct TapToAddMapView: UIViewRepresentable {
             let point = gestureRecognizer.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
             let size = UserDefaults.standard.integer(forKey: "distanceSize")
+            let selectSize = UserDefaults.standard.integer(forKey: "SelectdistanceSize")
 
-            let newPin = Pin(coordinate: coordinate, size: size)
+            let newPin = Pin(coordinate: coordinate, size: size,selectSize: selectSize)
             parent.pins.append(newPin)
             parent.isPinModeEnabled = false
         }
