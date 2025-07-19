@@ -26,7 +26,7 @@ struct PrivateDailog: View {
                    .onTapGesture {
                        isDialog = false
                        PlusBtton = true
-                       isNextBackButton = true
+                       isNextBackButton = false
                    }
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
@@ -56,7 +56,7 @@ struct PrivateDailog: View {
                         print("戻る")
                         isDialog = false
                         PlusBtton = true
-                        isNextBackButton = true
+                        isNextBackButton = false
                     }) {
                        BackButton()
                     }
