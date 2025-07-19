@@ -18,18 +18,18 @@ struct NotifyDistanceResponse: Codable {
 }
 
 // MARK: - API Function
-func getNotifyDistance() -> ([NotifyDistanceResponse], Bool) {
+func getNotifyDistance() -> (NotifyDistanceResponse, Bool) {
     // アクセストークン取得
     let accessToken = AuthTokenManager.shared.getAccessToken()
     
     // 取得できたか判定
     if accessToken.success == false {
-        return ([], false)
+        return (NotifyDistanceResponse(distance: 0), false)
     }
     
     // URL生成
     guard let url = URL(string: Config.apiBaseURL + "/app/notify/distance") else {
-        return ([], false)
+        return (NotifyDistanceResponse(distance: 0), false)
     }
     
     // リクエスト作成
@@ -42,7 +42,7 @@ func getNotifyDistance() -> ([NotifyDistanceResponse], Bool) {
     
     // 同期実行の実装
     let semaphore = DispatchSemaphore(value: 0)
-    var result: ([NotifyDistanceResponse], Bool) = ([], false)
+    var result: (NotifyDistanceResponse, Bool) = (NotifyDistanceResponse(distance: 0), false)
     
     let task = URLSession.shared.dataTask(with: request) { data, response, error in
         defer { semaphore.signal() }
@@ -74,7 +74,7 @@ func getNotifyDistance() -> ([NotifyDistanceResponse], Bool) {
         // JSONデコード
         do {
             let response = try JSONDecoder().decode(NotifyDistanceResponse.self, from: data)
-            result = ([response], true)
+            result = (response, true)
         } catch {
             print("JSON decode error: \(error.localizedDescription)")
             return

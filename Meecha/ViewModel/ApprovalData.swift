@@ -22,9 +22,9 @@ class ApprovalModel: ObservableObject {
     init(){
         //仮データ
         Approvals = [
-            ApprovalData(id: "aaa", targetName: "ECC太郎", targetId: "aaa"),
-            ApprovalData(id: "bbb", targetName: "りんりんご", targetId: "bbb"),
-            ApprovalData(id: "ccc", targetName: "みーちゃ", targetId: "ccc")
+//            ApprovalData(id: "aaa", targetName: "ECC太郎", targetId: "aaa"),
+//            ApprovalData(id: "bbb", targetName: "りんりんご", targetId: "bbb"),
+//            ApprovalData(id: "ccc", targetName: "みーちゃ", targetId: "ccc")
         ]
     }
 }

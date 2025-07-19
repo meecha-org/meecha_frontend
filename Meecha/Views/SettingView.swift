@@ -11,15 +11,18 @@ struct SettingView: View {
     @State var isDistance: Bool = false     //プライベート範囲画面
     @State var isDialog: Bool = false
 
-    @State var UserName: String = ""
-    @State var UserID: String = ""
+    public var UserName: String
+    public var UserID: String
+        
+    // 通知距離を保持する変数
+    @State var nowDistance: Int = 1000
     
     var body: some View {
         if isDistance{ MapWrapperView(isDistance: $isDistance) }
         else{
             ZStack{
                 VStack(spacing: 32) {
-                    SettingAccountInfo(Myicon: .myicon, MyName: UserName, MyID: UserID)
+                    SettingAccountInfo(MyName: UserName, MyID: UserID)
                         .padding(.top, 150)
                     
                     RoundedRectangle(cornerRadius: 5)
@@ -40,21 +43,22 @@ struct SettingView: View {
                         SettingListsGroup(isDistance: $isDistance, isDialog: $isDialog )
                     }
                     Spacer()
-                }.task {
-                    do {
-                        // 自身の情報取得
-                        let response = try await FetchInfo()
-                        debugPrint("userInfo: \(response)")
-                        
-                        // 情報を設定
-                        UserName = response.name
-                        UserID = response.userId
-                    } catch {
-                        debugPrint(error)
-                    }
                 }   // VStack
                 if isDialog {
-                    DistanceDialog(isDialog: $isDialog)
+                    DistanceDialog(selectDistance: $nowDistance, isDialog: $isDialog)
+                }
+            }.task {
+                do {
+                    // 現在の通離距離を取得する
+                    let (distance,success) = getNotifyDistance()
+                    
+                    if success {
+                        debugPrint("nowDistance: \(distance.distance)")
+                        // 成功した時
+                        nowDistance = distance.distance
+                    }
+                } catch {
+                    debugPrint(error)
                 }
             }
         }   // else
@@ -62,5 +66,5 @@ struct SettingView: View {
 }   // View
 
 #Preview {
-    SettingView()
+    SettingView(UserName: "test", UserID: "test")
 }

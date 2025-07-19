@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingAccountInfo: View {
-    @State var Myicon: ImageResource
+//    @State var Myicon: ImageResource
     @State var MyName: String = ""
     @State var MyID: String = ""
     // コピーテキスト
@@ -18,16 +18,18 @@ struct SettingAccountInfo: View {
     
     var body: some View {
         HStack(spacing: 16){
-            // アイコン
-            Image(Myicon)
-                .resizable()
-                .frame(width: 120, height: 120)
-                .cornerRadius(75)
-                // 角丸ボーダー
-                .overlay(
-                    RoundedRectangle(cornerRadius: 75)
-                        .stroke(Color.main, lineWidth: 1)
-                )
+            AsyncImage(url: URL(string: "https://k8s-meecha.mattuu.com/auth/assets/\(MyID).png")) {response in
+                // アイコン
+                response.image?
+                    .resizable()
+                    .frame(width: 120, height: 120)
+                    .cornerRadius(75)
+                    // 角丸ボーダー
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 75)
+                            .stroke(Color.main, lineWidth: 1)
+                    )
+            }
             
             VStack(alignment: .leading){
                 ZStack {
@@ -48,5 +50,5 @@ struct SettingAccountInfo: View {
 }
 
 #Preview {
-    SettingAccountInfo(Myicon: .myicon, MyName: "りんご", MyID: "1234567890")
+    SettingAccountInfo(MyName: "りんご", MyID:"c87bb9f9-c224-4e88-9adb-849614275189")
 }
