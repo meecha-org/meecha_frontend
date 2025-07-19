@@ -54,7 +54,9 @@ struct PrivateDailog: View {
                     // 戻るボタン
                     Button(action: {
                         print("戻る")
-                        isDialog = false    // ダイアログ閉じる
+                        isDialog = false
+                        PlusBtton = true
+                        isNextBackButton = true
                     }) {
                        BackButton()
                     }
@@ -67,8 +69,8 @@ struct PrivateDailog: View {
                         print("\(selectDistance)")
                         isDialog = false            // ダイアログ閉じる
                         isNextBackButton = true
-                        isPinModeEnabled.toggle()   //ピン設置モード
-                        isDraging.toggle()          //ピンドラッグモード
+                        isPinModeEnabled = true   //ピン設置モード
+                        isDraging = true          //ピンドラッグモード
                         print("ピン設置モード\(isPinModeEnabled)")
                         print("ピンドラッグモード\(isDraging)")
                         
