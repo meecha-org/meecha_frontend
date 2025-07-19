@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SettingView: View {
-    @State var isDistance: Bool = false
+    @State var isDistance: Bool = true     //プライベート範囲画面
     @State var isDialog: Bool = false
 
     @State var UserName: String = ""
     @State var UserID: String = ""
     
     var body: some View {
-        if isDistance{ MapWrapperView() }
+        if isDistance{ MapWrapperView(isDistance: $isDistance) }
         else{
             ZStack{
                 VStack(spacing: 32) {

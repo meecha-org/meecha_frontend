@@ -15,7 +15,7 @@ struct SwiftUIPinView: View {
             Circle()
                 .fill(Color.white)
                 .opacity(0.75)
-                .frame(width: 44, height: 44)
+                .frame(width: 100, height: 100)
                 //角丸ボーダー
                 .overlay(
                     Circle()
@@ -23,7 +23,7 @@ struct SwiftUIPinView: View {
                 )
             Image(.lockKey)
                 .resizable()
-                .frame(width: 20, height: 20)
+                .frame(width: 30, height: 30)
         }
     }
 }
@@ -33,7 +33,7 @@ class HostingPinView: UIView {
 
     init() {
         self.hostingController = UIHostingController(rootView: SwiftUIPinView())
-        super.init(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         self.hostingController.view.frame = self.bounds
         self.hostingController.view.backgroundColor = .clear
         self.addSubview(hostingController.view)
@@ -124,7 +124,6 @@ struct TapToAddMapView: UIViewRepresentable {
             
             // タップされた場所(ビュー内の座標)を取得
             let point = gestureRecognizer.location(in: mapView)
-            print("\(point)")
             // 地図上の緯度・経度に変換
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
             print("\(coordinate)")
@@ -142,7 +141,7 @@ struct TapToAddMapView: UIViewRepresentable {
             if annotationView == nil {
                 annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 annotationView?.canShowCallout = false
-                annotationView?.isDraggable = true // ← ここがポイント！
+                annotationView?.isDraggable = true      // ピンドラッグ
 
 
                 // Render SwiftUI view to image
@@ -155,7 +154,7 @@ struct TapToAddMapView: UIViewRepresentable {
             } else {
                 annotationView?.annotation = annotation
             }
-
+            
             return annotationView
         }
     }

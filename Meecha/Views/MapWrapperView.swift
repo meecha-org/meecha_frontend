@@ -15,8 +15,13 @@ struct MapWrapperView: View {
     
     @StateObject private var locationManager = LocationManager() // 現在地の取得
     @State private var annotations: [MKPointAnnotation] = []     // ピンの一覧
+    @State private var temporaryAnnotation: MKPointAnnotation? = nil
+    @State private var fixedAnnotations: [MKPointAnnotation] = []
+    @State var PlusBtton : Bool = true          // プラスボタン
     @State var isPinModeEnabled: Bool = false   // ピンを立てるモード
-    @State var isDraging : Bool = false    // ピンドラッグモード
+    @State var isDraging : Bool = false         // ピンドラッグモード
+    @State var isDialog: Bool = false           // 範囲選択ダイアログ
+    @Binding var isDistance: Bool               // プライベート範囲画面
 
     
     var body: some View {
@@ -30,35 +35,35 @@ struct MapWrapperView: View {
             }
             VStack{
                 Spacer()
-                HStack{
-                    Spacer()
-                    // ピン設置モード切り替えボタン
-                    Button(action: {
-                        isPinModeEnabled.toggle()
-                        isDraging.toggle()
-                        print("ピン設置モード\(isPinModeEnabled)")
-                        print("ピンドラッグモード\(isDraging)")
-
-                    }) {
-                        ZStack{
-                            Circle()
-                                .fill(Color.white)
-                                .frame(width: 60, height: 60)
-                                // 角丸ボーダー
-                                .overlay(
-                                    Circle()
-                                        .stroke(Color.main, lineWidth: 1)
-                                )
-                            Image(systemName: "plus")
-                                .resizable()
-                                .frame(width: 26, height: 26)
-                                .foregroundStyle(Color.icon)
+                // ピン追加ボタン
+                if PlusBtton{
+                    HStack{
+                        Spacer()
+                        // ピン設置モード切り替えボタン
+                        Button(action: {
+                            isDialog = true
+                            PlusBtton = false
+                        }) {
+                            ZStack{
+                                Circle()
+                                    .fill(Color.white)
+                                    .frame(width: 60, height: 60)
+                                    // 角丸ボーダー
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.main, lineWidth: 1)
+                                    )
+                                Image(systemName: "plus")
+                                    .resizable()
+                                    .frame(width: 26, height: 26)
+                                    .foregroundStyle(Color.icon)
+                            }
                         }
+                        .padding(.trailing, 30)
                     }
-                    .padding(.trailing, 30)
-                    
+                    .padding(.bottom, 120)
                 }
-                .padding(.bottom, 120)
+                
             }
             VStack{
                 Rectangle()
@@ -69,12 +74,50 @@ struct MapWrapperView: View {
                     .fill(gradient)
                     .frame(maxWidth: .infinity, maxHeight: 130)
             }
+            VStack{
+                Spacer()
+                if isPinModeEnabled{
+                    // 決定・戻るボタン
+                    HStack{
+                        // 戻るボタン
+                        Button(action: {
+                            isPinModeEnabled = false
+                            isDraging = false
+                            PlusBtton = true
+                            if let annotation = temporaryAnnotation {
+                                fixedAnnotations.append(annotation)
+                                temporaryAnnotation = nil
+                            }
+                        }) {
+                            BackButton()
+                        }
+                        Spacer()
+                        // 決定ボタン
+                        Button(action: {
+                            isPinModeEnabled = false
+                            isDraging = false
+                            PlusBtton = true
+                        }) {
+                            NextButton()
+                        }
+                    }
+                    .frame(width: 300)
+                    .padding(.bottom, 130)
+                }else if PlusBtton{
+                    // 戻るボタン
+                    Button(action: {
+                        isDistance = false
+                    }) {
+                        BackButton()
+                    }
+                    .padding(.bottom, 130)
+                }   // else if
+            }
+            if isDialog{
+                PrivateDailog(isDialog: $isDialog, isDraging: $isDraging, isPinModeEnabled: $isPinModeEnabled)
+            }
         }   // ZStack
         .edgesIgnoringSafeArea(.all)
     }   // body
 }   // View
 
-// MARK: - プレビュー
-#Preview {
-    MapWrapperView()
-}
