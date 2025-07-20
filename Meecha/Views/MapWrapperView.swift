@@ -169,9 +169,21 @@ struct MapWrapperView: View {
                 
                 // 成功した時
                 for ignorePoint in response {
+                    var distanceSize = 20
+                    switch ignorePoint.size {
+                    case 50:      distanceSize = 20
+                    case 200:     distanceSize = 50
+                    case 500:     distanceSize = 100
+                    case 1000:    distanceSize = 150
+                    case 3000:    distanceSize = 250
+                    case 5000:    distanceSize = 300
+                    default :
+                        distanceSize = 20
+                    }
+                    
                     debugPrint("ignore Pin: \(ignorePoint)")
                     // 除外ポイントを追加する
-                    pins.pins.append(Pin(coordinate: CLLocationCoordinate2D(latitude: ignorePoint.latitude, longitude: ignorePoint.longitude), size: ignorePoint.size, selectSize: ignorePoint.size))
+                    pins.pins.append(Pin(coordinate: CLLocationCoordinate2D(latitude: ignorePoint.latitude, longitude: ignorePoint.longitude), size: distanceSize, selectSize: ignorePoint.size))
                 }
             }
         }   // ZStack
